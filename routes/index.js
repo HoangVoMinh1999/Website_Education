@@ -6,7 +6,4 @@ var CourseController = require('../Controller/CourseController')
 router.get('/', function(req,res,next){
   res.render('index',{title:'Trang chủ'})
 });
-
-
-
 module.exports = router;
