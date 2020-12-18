@@ -22,18 +22,21 @@ router.post('/register',function(req,res,next){
   res.redirect('/login')
 })
 //---Course
-router.get('/courses-mobile',function(req,res,next){
+router.get('/course-mobile',function(req,res,next){
   res.render('./course/courseMobile',{title:"Khóa học Mobile"})
 })
-router.get('/courses-website',function(req,res,next){
+router.get('/course-website',function(req,res,next){
   res.render('./course/courseWebsite',{title:"Khóa học Website"})
 })
 //---Add Course
 router.get('/add-course',function(req,res,next){
-  res.render('./course/addCourse',{title:'Add new course'})
+  res.render('./course/addCourse',{title:"Thêm khóa học mới"})
 })
 //---Edit Course
-router.get('/edit-course',function(req,res,next){
-  res.render('./course/editCourse',{title:'Edit course'})
+router.get('/course-website/edit-course',function(req,res,next){
+  res.render('./course/editCourse',{title:'Cập nhật khóa học website'})
+})
+router.get('/course-mobile/edit-course',function(req,res,next){
+  res.render('./course/editCourse',{title:'Cập nhật khóa học mobile'})
 })
 module.exports = router;
