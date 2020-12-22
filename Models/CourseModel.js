@@ -5,14 +5,12 @@ const CourseModel = (sequelize, Sequelize) => {
     const Course = sequelize.define('User', {
         Id: {type: STRING},
         Name: {type: STRING,},
-        ConfigCourseTypeId: {type:STRING},
+        ConfigCourseType: {type:STRING},
         Intro: {type:STRING},
         Description: {type:STRING},
         Rating: {type: FLOAT},
         Image : {type: STRING},
         Price: {type:FLOAT},
-        Log_UpdatedBy:{type:STRING},
-        Log_UpdatedDate:{type:STRING},
         IsAllowPPreview:{type:BOOLEAN}
     })
     return Course

@@ -7,7 +7,7 @@ const connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: '1104',
-  database: 'website'
+  database: 'tkweb'
 })
 
 /* GET home page. */
@@ -30,28 +30,20 @@ router.post('/register', function (req, res, next) {
   res.redirect('/login')
 })
 //---Course
-router.get('/course-mobile', CourseController.ListCourse)
+router.get('/course-mobile', CourseController.ListCourseMobile)
 
-router.get('/course-website', function (req, res, next) {
-  res.render('./course/courseWebsite', { title: "Khóa học Website" })
-})
+router.get('/course-website', CourseController.ListCourseWebsite)
 //---Add Course
 router.get('/add-course', function (req, res, next) {
   connection.connect()
-  var newPromise = new Promise((result,err) => {
-    connection.query('SELECT * from ConfigCourseType', function (err, results, fields) {
-      if (err) throw err
-      console.log(results)
-    })
+  connection.query('SELECT * from ConfigCourseType', function (err, results, fields) {
+    if (err) throw err
+    console.log(results)
+    res.render('./course/addCourse', { title: "Thêm khóa học mới", ConfigCourseTypes: results})
   })
-  newPromise.then((res) => {
-    res.render('./course/addCourse', { title: "Thêm khóa học mới", ListCourseType: results})
-    connection.end()
-  })
-  .catch((err)=>{
-    
-  })
+  connection.end()
 })
+router.post('/add-course',CourseController.AddNewCourse)
 //---Edit Course
 router.get('/course-website/edit-course', function (req, res, next) {
   res.render('./course/editCourse', { title: 'Cập nhật khóa học website' })

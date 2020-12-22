@@ -12,22 +12,21 @@
                             <th>Image</th>
                             <th>Name</th>
                             <th>Status</th>
-                            <th>Purchases</th>
-                            <th>Product sales</th>
-                            <th>Stock</th>
-                            <th>Price</th>
-                            <th>Setting</th>
+                            <th>Rating</th>
+                            <th>Giá tiền</th>
+                            <th>Số người tham gia</th>
+                            <th>Chỉnh sửa</th>
                         </tr>
+                        {{#each data}}
                         <tr>
                             <td><img src="img/new-product/5-small.jpg" alt="" /></td>
-                            <td>Product Title 1</td>
+                            <td>{{this.Name}}</td>
                             <td>
                                 <button class="pd-setting">Active</button>
                             </td>
-                            <td>50</td>
-                            <td>$750</td>
-                            <td>Out Of Stock</td>
-                            <td>$15</td>
+                            <td>{{this.Rating}}</td>
+                            <td>{{this.Price}} VND</td>
+                            <td></td>
                             <td>
                                 <form action="/course-website/edit-course">
                                     <button class="btn btn-ctl-bt waves-effect m-r-10 pd-setting-ed">
@@ -62,6 +61,7 @@
                                 </div>
                             </td>
                         </tr>
+                        {{/each}}
                         <tr>
                             <td><img src="img/new-product/6-small.jpg" alt="" /></td>
                             <td>Product Title 2</td>
@@ -71,7 +71,6 @@
                             <td>60</td>
                             <td>$1020</td>
                             <td>In Stock</td>
-                            <td>$17</td>
                             <td>
                                 <form action="/course-website/edit-course">
                                     <button class="btn btn-ctl-bt waves-effect m-r-10 pd-setting-ed">
@@ -115,7 +114,6 @@
                             <td>70</td>
                             <td>$1050</td>
                             <td>Low Stock</td>
-                            <td>$15</td>
                             <td>
                                 <form action="/course-website/edit-course">
                                     <button class="btn btn-ctl-bt waves-effect m-r-10 pd-setting-ed">
