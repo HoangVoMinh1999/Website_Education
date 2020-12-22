@@ -5,6 +5,7 @@ const CourseModel = (sequelize, Sequelize) => {
     const Course = sequelize.define('User', {
         Id: {type: STRING},
         Name: {type: STRING,},
+        ConfigCourseTypeId: {type:STRING},
         Intro: {type:STRING},
         Description: {type:STRING},
         Rating: {type: FLOAT},
@@ -16,7 +17,6 @@ const CourseModel = (sequelize, Sequelize) => {
     })
     return Course
 }
-
 module.exports = {
     CourseModel
 }
