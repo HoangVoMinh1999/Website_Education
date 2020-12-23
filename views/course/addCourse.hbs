@@ -24,8 +24,7 @@
                                                         placeholder="Nhập tên của khóa học">
                                                 </div>
                                                 <select name="ConfigCourseType"
-                                                    class="form-control mg-b-pro-edt pro-edt-select form-control-primary">
-                                                    <option value="opt1">Chọn loại khóa học</option>
+                                                    class="form-control mg-b-pro-edt pro-edt-select form-control-primary" aria-placeholder="Chọn loại khóa học">
                                                     {{#each ConfigCourseTypes}}
                                                     <option value="{{this.Id}}">{{this.Name}}
                                                     </option>
@@ -68,7 +67,7 @@
                                                 <button type="submit" 
                                                     class="btn btn-ctl-bt waves-effect waves-light m-r-10">Lưu
                                                 </button>
-                                                <a class="btn btn-ctl-bt waves-effect waves-light" href="/">Quay lại</a>
+                                                <button type="button" class="btn btn-ctl-bt waves-effect waves-light" onclick="Previous()">Quay lại</button>
                                             </div>
                                         </div>
                                     </div>
@@ -150,3 +149,9 @@
         </div>
     </div>
 </div>
+
+<script>
+    function Previous() { 
+            window.history.go(-1); 
+        }
+</script>

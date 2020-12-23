@@ -9,7 +9,7 @@ const connection = mysql.createConnection({
   password: '1104',
   database: 'tkweb'
 })
-
+connection.connect()
 /* GET home page. */
 //--- Index
 router.get('/', function (req, res, next) {
@@ -33,15 +33,14 @@ router.post('/register', function (req, res, next) {
 router.get('/course-mobile', CourseController.ListCourseMobile)
 
 router.get('/course-website', CourseController.ListCourseWebsite)
+router.post('/course-website',CourseController.DeleteCourseWebsite)
 //---Add Course
 router.get('/add-course', function (req, res, next) {
-  connection.connect()
   connection.query('SELECT * from ConfigCourseType', function (err, results, fields) {
     if (err) throw err
     console.log(results)
     res.render('./course/addCourse', { title: "Thêm khóa học mới", ConfigCourseTypes: results})
   })
-  connection.end()
 })
 router.post('/add-course',CourseController.AddNewCourse)
 //---Edit Course
