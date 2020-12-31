@@ -3,13 +3,15 @@ var router = express.Router();
 var CourseController = require('../Controller/CourseController')
 var mysql = require('mysql')
 
-const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '1104',
-  database: 'tkweb'
-})
-connection.connect()
+// Config database
+const connectionString = {
+  host: process.env.HOST,
+  user: process.env.USERNAME,
+  password: process.env.PASSWORD,
+  insecureAuth : true,
+  database: process.env.DB,
+  schema:'ConfigCourse'
+};
 /* GET home page. */
 //--- Index
 router.get('/', function (req, res, next) {
@@ -36,18 +38,25 @@ router.get('/course-website', CourseController.ListCourseWebsite)
 router.post('/course-website',CourseController.DeleteCourseWebsite)
 //---Add Course
 router.get('/add-course', function (req, res, next) {
+  const connection = mysql.createConnection(connectionString);
+  connection.connect();
   connection.query('SELECT * from ConfigCourseType', function (err, results, fields) {
     if (err) throw err
     console.log(results)
     res.render('./course/addCourse', { title: "Thêm khóa học mới", ConfigCourseTypes: results})
   })
+  connection.end();
 })
 router.post('/add-course',CourseController.AddNewCourse)
 //---Edit Course
-router.get('/course-website/edit-course', function (req, res, next) {
-  res.render('./course/editCourse', { title: 'Cập nhật khóa học website' })
+router.get('/edit-course', function (req, res, next) {
+  const connection = mysql.createConnection(connectionString);
+  connection.connect();
+  connection.query('SELECT * FROM ConfigCourse Where ID = ?',[req.query.ID],function(err,results,fields){
+    console.log(results)
+    res.render('./course/editCourse', { title: 'Cập nhật khóa học website',data: results[0] })
+  })
+  connection.end()
 })
-router.get('/course-mobile/edit-course', function (req, res, next) {
-  res.render('./course/editCourse', { title: 'Cập nhật khóa học mobile' })
-})
+router.post('/edit-course',CourseController.EditCourse)
 module.exports = router;

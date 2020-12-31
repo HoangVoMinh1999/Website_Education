@@ -22,6 +22,10 @@ const AddNewCourse = function(req,res,next){
         Intro:req.body.Intro,
         Description: req.body.Description,
         Price:req.body.Price == '' ? 0 : req.body.Price,
+        MaxStudents : req.body.MaxStudents,
+        CurrentStudents : 0,
+        Rating : 0.0,
+        Status : req.body.Status,
         Log_CreatedDate: require('moment')().format('YYYY-MM-DD HH:mm:ss'),
         Log_UpdatedDate: require('moment')().format('YYYY-MM-DD HH:mm:ss'),
     }
@@ -64,6 +68,7 @@ const ListCourseWebsite = function (req, res, next) {
     connection.connect();
     connection.query('SELECT * from ConfigCourse Where ConfigCourseTypeId = 1 and IsDeleted = 0 order by ID desc', function (err, result, fields) {
         if (err) throw err
+        console.log(result)
         res.render('./course/courseWebsite', { title: "Khóa học Website",data:result })
     })
     connection.end();
@@ -81,7 +86,25 @@ const DeleteCourseWebsite = function(req,res,next){
     connection.end();
 }
 
-
+const EditCourse = function(req,res,next){
+    var updatedItem = {
+        Name : req.body.Name,
+        Intro : req.body.Intro,
+        Description:req.body.Description,
+        Price:req.body.Price,
+        Log_UpdatedDate : require('moment')().format('YYYY-MM-DD HH:mm:ss'),
+        MaxStudents : req.body.MaxStudents,
+        CurrentStudents : req.body.CurrentStudents,
+        Status:req.body.Status
+    }
+    const connection = mysql.createConnection(connectionString);
+    connection.connect();
+    connection.query('UPDATE ConfigCourse set Name = ? , Intro = ? , Description = ? , Price = ?, MaxStudents = ?, CurrentStudents = ? , Log_UpdatedDate = ? , Status = ? where Id = ?',[updatedItem.Name,updatedItem.Intro,updatedItem.Description,updatedItem.Price,updatedItem.MaxStudents,updatedItem.CurrentStudents,updatedItem.Log_UpdatedDate,updatedItem.Status,req.body.ID],function(err,results,fields){
+        if (err) throw err;
+        res.redirect('/course-website')
+    })
+    connection.end();
+}
 
 
 module.exports = {
@@ -92,4 +115,6 @@ module.exports = {
     //--- Website
     ListCourseWebsite,
     DeleteCourseWebsite,
+    //EditCourse
+    EditCourse,
 }

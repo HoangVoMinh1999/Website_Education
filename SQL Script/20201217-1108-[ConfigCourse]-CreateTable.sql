@@ -13,6 +13,9 @@ CREATE TABLE `configcourse` (
   `Log_UpdatedBy` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `IsDeleted` bit(1) NOT NULL DEFAULT b'0',
   `IsAllowPreview` bit(1) NOT NULL DEFAULT b'0',
+	`Status` nvarchar(50) default null,
+    `MaxStudents` int default null,
+    `CurrentStudents` int default null
   PRIMARY KEY (`ID`),
   FOREIGN KEY (ConfigCourseTypeId) REFERENCES ConfigCourseType(Id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

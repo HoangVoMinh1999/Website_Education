@@ -10,187 +10,129 @@
                                         aria-hidden="true"></i>Thông tin khóa học</a></li>
                             <li><a href="#reviews"><i class="icon nalika-picture" aria-hidden="true"></i>Hình ảnh</a>
                             </li>
-                            <li><a href="#INFORMATION"><i class="icon nalika-chat" aria-hidden="true"></i>Bình luận</a>
-                            </li>
                         </ul>
                         <div id="myTabContent" class="tab-content custom-product-edit">
                             <div class="product-tab-list tab-pane fade active in" id="description">
-                                <div class="row">
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                        <div class="review-content-section">
-                                            <div class="input-group mg-b-pro-edt">
-                                                <span class="input-group-addon"><i class="icon nalika-user"
-                                                        aria-hidden="true"></i></span>
-                                                <input type="text" class="form-control"
-                                                    placeholder="Nhập tên của khóa học">
+                                <form action="/edit-course" method="POST">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                            <div class="review-content-section">
+                                                <div class="input-group mg-b-pro-edt">
+                                                    <span class="input-group-addon"><i class="icon nalika-user"
+                                                            aria-hidden="true"> Tên khóa học</i></span>
+                                                    <input type="text" class="form-control" name="Name"
+                                                        placeholder="Nhập tên của khóa học" value="{{data.Name}}">
+                                                </div>
+                                                <div class="input-group mg-b-pro-edt">
+                                                    <span class="input-group-addon"><i class="fa fa-usd"
+                                                            aria-hidden="true"> Giá tiền</i></span>
+                                                    <input type="text" class="form-control" name="Price"
+                                                        placeholder="Giá của khóa học" value="{{data.Price}}">
+                                                </div>
+                                                <div class="input-group mg-b-pro-edt">
+                                                    <span class="input-group-addon"><i class="icon nalika-favorites"
+                                                            aria-hidden="true"> SL tối đa người học</i></span>
+                                                    <input type="text" class="form-control" name="MaxStudents"
+                                                        placeholder="Số lượng học viên có thể tham gia"
+                                                        value="{{data.MaxStudents}}">
+                                                </div>
+                                                <div class="input-group mg-b-pro-edt">
+                                                    <span class="input-group-addon"><i class="icon nalika-user"
+                                                            aria-hidden="true"> SL người đã tham gia</i></span>
+                                                    <input type="text" class="form-control" name="CurrentStudents"
+                                                        placeholder="Nhập tên của khóa học" value="{{data.CurrentStudents}}">
+                                                </div>
                                             </div>
-                                            <select name="select"
-                                                class="form-control mg-b-pro-edt pro-edt-select form-control-primary">
-                                                <option value="opt1">Chọn loại khóa học</option>
-                                                <option value="opt2">Lập trình website</option>
-                                                <option value="opt3">Lập trình mobile</option>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                            <select name="Status"
+                                                class="form-control mg-b-pro-edt pro-edt-select form-control-primary"
+                                                aria-placeholder="Chọn trạng thái">
+                                                <option value="{{data.Status}}">{{data.Status}}</option>
+                                                <option value="Active">"Active"</option>
+                                                <option value="Pause">"Pause"</option>
+                                                <option value="Disable">"Disable"</option>
                                             </select>
                                             <div class="input-group mg-b-pro-edt">
-                                                <span class="input-group-addon"><i class="fa fa-usd"
+                                                <span class="input-group-addon"><i class="icon nalika-user"
                                                         aria-hidden="true"></i></span>
-                                                <input type="text" class="form-control" placeholder="Giá của khóa học">
-                                            </div>
-                                            <div class="input-group mg-b-pro-edt">
-                                                <span class="input-group-addon"><i class="icon nalika-favorites"
-                                                        aria-hidden="true"></i></span>
-                                                <input type="text" class="form-control"
-                                                    placeholder="Số lượng học viên có thể tham gia">
+                                                <textarea class="form-control" name="Intro" cols="30" rows="7"
+                                                    placeholder="Mô tả chung về khóa học">{{data.Intro}}</textarea>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                        <div class="review-content-section">
-                                            <div class="input-group mg-b-pro-edt">
-                                                <span class="input-group-addon"><i class="icon nalika-user"
-                                                        aria-hidden="true"></i></span>
-                                                <input type="text" class="form-control"
-                                                    placeholder="Mô tả chung của khóa học">
-                                            </div>
-                                            <div class="input-group mg-b-pro-edt">
-                                                <span class="input-group-addon"><i class="icon nalika-user"
-                                                        aria-hidden="true"></i></span>
-                                                <textarea class="form-control" id="" cols="30" rows="7"
-                                                    placeholder="Mô tả chi tiết khóa học"></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <div class="text-center custom-pro-edt-ds">
-                                            <button type="button"
-                                                class="btn btn-ctl-bt waves-effect waves-light m-r-10">Lưu
-                                            </button>
-                                            <a class="btn btn-ctl-bt waves-effect waves-light" href="/">Quay lại</a>
-                                        </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="text-center custom-pro-edt-ds">
+                                        <button type="submit" name="ID" value="{{data.ID}}" class="btn btn-ctl-bt waves-effect waves-light m-r-10">Lưu
+                                        </button>
+                                        <button type="button" class="btn btn-ctl-bt waves-effect waves-light"
+                                            onclick="Previous()">Quay lại</button>
                                     </div>
                                 </div>
                             </div>
-                            <div class="product-tab-list tab-pane fade" id="reviews">
-                                <div class="row">
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <div class="review-content-section">
-                                            <div class="row">
-                                                <div class="col-lg-4">
-                                                    <div class="pro-edt-img mg-b-0">
-                                                        <img src="img/new-product/7-small.jpg" alt="" />
-                                                    </div>
+                            </form>
+                        </div>
+                        <div class="product-tab-list tab-pane fade" id="reviews">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="review-content-section">
+                                        <div class="row">
+                                            <div class="col-lg-4">
+                                                <div class="pro-edt-img mg-b-0">
+                                                    <img src="img/new-product/7-small.jpg" alt="" />
                                                 </div>
-                                                <div class="col-lg-8">
-                                                    <div class="row">
-                                                        <div class="col-lg-12">
-                                                            <div class="product-edt-pix-wrap">
-                                                                <div class="input-group">
-                                                                    <span class="input-group-addon">TT</span>
-                                                                    <input type="text" class="form-control"
-                                                                        placeholder="Label Name">
-                                                                </div>
-                                                                <div class="row">
-                                                                    <div class="col-lg-6">
-                                                                        <div class="form-radio">
-                                                                            <form>
-                                                                                <div class="radio radiofill">
-                                                                                    <label>
-                                                                                        <input type="radio"
-                                                                                            name="radio"><i
-                                                                                            class="helper"></i>Largest
-                                                                                        Image
-                                                                                    </label>
-                                                                                </div>
-                                                                                <div class="radio radiofill">
-                                                                                    <label>
-                                                                                        <input type="radio"
-                                                                                            name="radio"><i
-                                                                                            class="helper"></i>Medium
-                                                                                        Image
-                                                                                    </label>
-                                                                                </div>
-                                                                                <div class="radio radiofill">
-                                                                                    <label>
-                                                                                        <input type="radio"
-                                                                                            name="radio"><i
-                                                                                            class="helper"></i>Small
-                                                                                        Image
-                                                                                    </label>
-                                                                                </div>
-                                                                            </form>
-                                                                        </div>
+                                            </div>
+                                            <div class="col-lg-8">
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="product-edt-pix-wrap">
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">TT</span>
+                                                                <input type="text" class="form-control"
+                                                                    placeholder="Label Name">
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-lg-6">
+                                                                    <div class="form-radio">
+                                                                        <form>
+                                                                            <div class="radio radiofill">
+                                                                                <label>
+                                                                                    <input type="radio" name="radio"><i
+                                                                                        class="helper"></i>Largest
+                                                                                    Image
+                                                                                </label>
+                                                                            </div>
+                                                                            <div class="radio radiofill">
+                                                                                <label>
+                                                                                    <input type="radio" name="radio"><i
+                                                                                        class="helper"></i>Medium
+                                                                                    Image
+                                                                                </label>
+                                                                            </div>
+                                                                            <div class="radio radiofill">
+                                                                                <label>
+                                                                                    <input type="radio" name="radio"><i
+                                                                                        class="helper"></i>Small
+                                                                                    Image
+                                                                                </label>
+                                                                            </div>
+                                                                        </form>
                                                                     </div>
-                                                                    <div class="col-lg-6">
-                                                                        <div class="product-edt-remove">
-                                                                            <button type="button"
-                                                                                class="btn btn-ctl-bt waves-effect waves-light">Remove
-                                                                                <i class="fa fa-times"
-                                                                                    aria-hidden="true"></i>
-                                                                            </button>
-                                                                        </div>
+                                                                </div>
+                                                                <div class="col-lg-6">
+                                                                    <div class="product-edt-remove">
+                                                                        <button type="button"
+                                                                            class="btn btn-ctl-bt waves-effect waves-light">Remove
+                                                                            <i class="fa fa-times"
+                                                                                aria-hidden="true"></i>
+                                                                        </button>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="product-tab-list tab-pane fade" id="INFORMATION">
-                                <div class="row">
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <div class="review-content-section">
-                                            <div class="card-block">
-                                                <div class="m-t-10">
-                                                    <div class="stars stars-example-css detail-stars">
-                                                        <div class="review-rating">
-                                                            <fieldset class="rating">
-                                                                <input type="radio" id="star5" name="rating" value="5">
-                                                                <label class="full" for="star5"></label>
-                                                                <input type="radio" id="star4half" name="rating"
-                                                                    value="4.5">
-                                                                <label class="half" for="star4half"></label>
-                                                                <input type="radio" id="star4" name="rating" value="4">
-                                                                <label class="full" for="star4"></label>
-                                                                <input type="radio" id="star3half" name="rating"
-                                                                    value="3.5">
-                                                                <label class="half" for="star3half"></label>
-                                                                <input type="radio" id="star3" name="rating" value="3">
-                                                                <label class="full" for="star3"></label>
-                                                                <input type="radio" id="star2half" name="rating"
-                                                                    value="2.5">
-                                                                <label class="half" for="star2half"></label>
-                                                                <input type="radio" id="star2" name="rating" value="2">
-                                                                <label class="full" for="star2"></label>
-                                                                <input type="radio" id="star1half" name="rating"
-                                                                    value="1.5">
-                                                                <label class="half" for="star1half"></label>
-                                                                <input type="radio" id="star1" name="rating" value="1">
-                                                                <label class="full" for="star1"></label>
-                                                                <input type="radio" id="starhalf" name="rating"
-                                                                    value="0.5">
-                                                                <label class="half" for="starhalf"></label>
-                                                            </fieldset>
-                                                        </div>
-                                                        <div class="clear"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="input-group mg-b-15">
-                                                    <span class="input-group-addon"><i class="icon nalika-user"
-                                                            aria-hidden="true"></i></span>
-                                                    <input type="text" class="form-control" value="Name">
-                                                    <textarea class="form-control" cols="10" rows="3"></textarea>
-                                                    <span class="input-group-addon">
-                                                        <button data-toggle="tooltip" title="Trash" class="pd-setting-ed"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
-                                                    </span>
-                                                </div>
-                                                <div class="form-group review-pro-edt mg-b-0-pt">
-                                                    <a class="btn btn-ctl-bt waves-effect waves-light" href="/">Quay
-                                                        lại</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -204,3 +146,10 @@
         </div>
     </div>
 </div>
+</div>
+
+<script>
+    function Previous() {
+        window.history.go(-1);
+    }
+</script>
