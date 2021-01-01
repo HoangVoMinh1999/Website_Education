@@ -38,7 +38,31 @@ const AddNewCourse = function(req,res,next){
       });
       connection.end();
 }
-
+//--- List Course 
+const ListCourse = function(req,res,next){
+    var ConfigCourseTypeId = req.query.ConfigCourseTypeId;
+    console.log(ConfigCourseTypeId);
+    if (ConfigCourseTypeId === null){
+        const connection = mysql.createConnection(connectionString);
+        connection.connect()
+        connection.query('SELECT * from ConfigCourse',function(err,results,fields){
+            if (err) throw err;
+            console.log(results)
+            res.render('./course/courseWebsite',{title:'Tất cả khóa học',data: results});
+        })
+        connection.end();
+    }
+    else {
+        const connection = mysql.createConnection(connectionString);
+        connection.connect()
+        connection.query('SELECT * from ConfigCourse where ConfigCourseTypeId = ? and IsDeleted = ? Order by ID desc',[ConfigCourseTypeId,0],function(err,results,fields){
+            if (err) throw err;
+            console.log(results)
+            res.render('./course/courseWebsite',{title:'Tất cả khóa học',data: results});
+        })
+        connection.end()
+    }
+}
 //--- Course Mobile
 const ListCourseMobile = function (req, res, next) {
     const connection = mysql.createConnection(connectionString);
@@ -109,6 +133,7 @@ const EditCourse = function(req,res,next){
 
 module.exports = {
     //--- Course
+    ListCourse,
     AddNewCourse,
     //--- Mobile
     ListCourseMobile,

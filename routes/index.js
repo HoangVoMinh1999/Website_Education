@@ -32,6 +32,7 @@ router.post('/register', function (req, res, next) {
   res.redirect('/login')
 })
 //---Course
+router.get('/course',CourseController.ListCourse)
 router.get('/course-mobile', CourseController.ListCourseMobile)
 
 router.get('/course-website', CourseController.ListCourseWebsite)

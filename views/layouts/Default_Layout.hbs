@@ -97,8 +97,10 @@
                 <span class="mini-click-non">Danh sách khóa học</span>
               </a>
               <ul class="submenu-angle" aria-expanded="true">
-                <li><a title="Website" href="/course-website"><span class="mini-sub-pro">Lập trình website</span></a></li>
-                <li><a title="Mobile" href="/course-mobile"><span class="mini-sub-pro">Lập trình mobile</span></a></li>
+                <form action="/course">
+                  <li><button class="btn btn-link btn-lg link-unstyled" type="submit" name="ConfigCourseTypeId" value="1"><span class="mini-sub-pro">Lập trình website</span></button></li>
+                  <li><button class="btn btn-link btn-lg link-unstyled" type="submit" name="ConfigCourseTypeId" value="2"><span class="mini-sub-pro">Lập trình mobile</span></button></li>
+                </form>
               </ul>
             </li>
             <li>
@@ -110,10 +112,11 @@
               </ul>
             </li>
             <li>
-              <a class="has-arrow" href="mailbox.html" aria-expanded="false"><i class="icon nalika-setting icon-wrap"></i>
+              <a class="has-arrow" href="mailbox.html" aria-expanded="false"><i
+                  class="icon nalika-setting icon-wrap"></i>
                 <span class="mini-click-non">Settings</span></a>
               <ul class="submenu-angle" aria-expanded="false">
-                <li><a  href="mailbox.html"><span class="mini-sub-pro">Tài khoản</span></a></li>
+                <li><a href="mailbox.html"><span class="mini-sub-pro">Tài khoản</span></a></li>
                 <li><a href="/login"><span class="mini-sub-pro">Đăng xuất</span></a></li>
               </ul>
             </li>
