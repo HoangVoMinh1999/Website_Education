@@ -107,8 +107,11 @@
               <a class="has-arrow" href="#" aria-expanded="false"><i class="icon nalika-mail icon-wrap"></i>
                 <span class="mini-click-non">Quản lý tài khoản</span></a>
               <ul class="submenu-angle" aria-expanded="false">
-                <li><a title="Inbox" href="/user"><span class="mini-sub-pro">Giảng viên</span></a></li>
-                <li><a title="View Mail" href="#"><span class="mini-sub-pro">Học sinh</span></a></li>
+                <form action="/user">
+                  <li><button class="btn btn-link btn-lg link-unstyled" type="submit" name="UserType" value="1"><span class="mini-sub-pro">Admin</span></button></li>
+                  <li><button class="btn btn-link btn-lg link-unstyled" type="submit" name="UserType" value="2"><span class="mini-sub-pro">Giảng viên</span></button></li>
+                  <li><button class="btn btn-link btn-lg link-unstyled" type="submit" name="UserType" value="3"><span class="mini-sub-pro">Học viên</span></button></li>
+                </form>
               </ul>
             </li>
             <li>
