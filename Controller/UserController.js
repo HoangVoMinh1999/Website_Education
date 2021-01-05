@@ -15,21 +15,34 @@ const connectionString = {
 
 //#region List User
 const ListUser = function(req, res, next) {
-        var UserType = req.query.UserType
-        console.log(connectionString)
-        const connection = mysql.createConnection(connectionString)
-        var title = ""
-        connection.connect()
-        connection.query('SELECT * FROM USERTYPE WHERE ID = ?', [UserType], function(err, results, fields) {
-            if (err) throw err
-            title = results[0].Role
-        })
-        connection.query('SELECT * FROM USER WHERE ROLE = ? AND IsDeleted = ?', [UserType, 0], function(err, results, fields) {
-            if (err) throw err
-            console.log(results)
-            res.render('./account/listUser', { title: 'Danh sách người dùng ' + title, data: results })
-        })
-        connection.end()
+        var userType = req.query.UserType
+        console.log(userType)
+        if (userType === undefined) {
+            const connection = mysql.createConnection(connectionString)
+            var title = ""
+            connection.connect()
+            connection.query('SELECT * FROM USER WHERE  IsDeleted = ? ORDER BY ID DESC', [0], function(err, results, fields) {
+                if (err) throw err
+                console.log(results)
+                res.render('./account/listUser', { title: 'Danh sách người dùng ', data: results })
+            })
+            connection.end()
+        } else {
+            const connection = mysql.createConnection(connectionString)
+            var title = ""
+            connection.connect()
+            connection.query('SELECT * FROM USERTYPE WHERE ID = ?', [userType], function(err, results, fields) {
+                if (err) throw err
+                title = results[0].Role
+            })
+            connection.query('SELECT * FROM USER WHERE ROLE = ? AND IsDeleted = ? ORDER BY ID DESC', [userType, 0], function(err, results, fields) {
+                if (err) throw err
+                console.log(results)
+                res.render('./account/listUser', { title: 'Danh sách người dùng ' + title, data: results })
+            })
+            connection.end()
+        }
+
     }
     //#endregion
 
@@ -47,7 +60,7 @@ const AddNewUser = function(req, res, next) {
         if (req.body.Password === req.body.ConfirmPassword) {
             const connection = mysql.createConnection(connectionString);
             connection.connect();
-            var query = connection.query('INSERT INTO USER SET ?', [newItem], function(error, results, fields) {
+            var query = connection.query('INSERT INTO USER SET ? ', [newItem], function(error, results, fields) {
                 if (error) throw error;
                 console.log(newItem)
                 console.log("Add Successfully !!!")
