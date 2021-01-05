@@ -34,7 +34,7 @@ const AddNewCourse = function(req,res,next){
     var query = connection.query('INSERT INTO ConfigCourse SET ?', newItem, function (error, results, fields) {
         if (error) throw error;
         console.log("Add Successfully !!!")
-        res.redirect('back')
+        res.redirect('/course?ConfigCourseTypeId='+newItem.ConfigCourseTypeId)
       });
       connection.end();
 }
@@ -55,11 +55,21 @@ const ListCourse = function(req,res,next){
     else {
         const connection = mysql.createConnection(connectionString);
         connection.connect()
+        var title = ""
+        var data = []
+        connection.query('SELECT * from ConfigCourseType where Id = ? and IsDeleted = ?',[ConfigCourseTypeId,0],function(err,results,fields){
+            if (err) throw err;
+            title = results[0].Name
+        })
         connection.query('SELECT * from ConfigCourse where ConfigCourseTypeId = ? and IsDeleted = ? Order by ID desc',[ConfigCourseTypeId,0],function(err,results,fields){
             if (err) throw err;
             console.log(results)
-            res.render('./course/courseWebsite',{title:'Tất cả khóa học',data: results});
+            data = results
+            console.log(title)
+            console.log(data)
+            res.render('./course/courseWebsite',{title:title,data: data});
         })
+
         connection.end()
     }
 }
@@ -128,12 +138,6 @@ const EditCourse = function(req,res,next){
         res.redirect('/course-website')
     })
     connection.end();
-}
-
-const ListUser = function(req, res, next) {
-    const connection = mysql.createConnection(connectionString);
-    connection.connect;
-    connection.query('SELECT * ')
 }
 
 
