@@ -14,7 +14,7 @@ const connectionString = {
     schema: 'ConfigCourse'
 };
 
-//--- Course
+//#region Add Course
 const AddNewCourse = function(req,res,next){
     var newItem = {
         Name: req.body.Name,
@@ -38,17 +38,17 @@ const AddNewCourse = function(req,res,next){
       });
       connection.end();
 }
-//--- List Course 
+//#endregion
+//#region  List Course 
 const ListCourse = function(req,res,next){
     var ConfigCourseTypeId = req.query.ConfigCourseTypeId;
     console.log(ConfigCourseTypeId);
-    if (ConfigCourseTypeId === null){
+    if (ConfigCourseTypeId === undefined){
         const connection = mysql.createConnection(connectionString);
         connection.connect();
-        var query = connection.query('INSERT INTO ConfigCourse SET ?', newItem, function(error, results, fields) {
+        var query = connection.query('SELECT * from ConfigCourse where IsDeleted = ?',[0], function(error, results, fields) {
             if (error) throw error;
-            console.log("Add Successfully !!!")
-            res.redirect('back')
+            res.render('./course/courseWebsite',{title:'Danh sách khóa học',data: results});
         });
         connection.end();
     }
@@ -63,17 +63,30 @@ const ListCourse = function(req,res,next){
         })
         connection.query('SELECT * from ConfigCourse where ConfigCourseTypeId = ? and IsDeleted = ? Order by ID desc',[ConfigCourseTypeId,0],function(err,results,fields){
             if (err) throw err;
-            console.log(results)
             data = results
-            console.log(title)
-            console.log(data)
             res.render('./course/courseWebsite',{title:title,data: data});
         })
 
         connection.end()
     }
 }
-    //--- Course Mobile
+//#endregion
+//#region Delete Course
+const DeleteCourse = function(req, res, next) {
+    var Id = req.body.ID
+    console.log(Id);
+    const connection = mysql.createConnection(connectionString);
+    connection.connect();
+    var query = connection.query('UPDATE ConfigCourse set IsDeleted = ?, Log_UpdatedDate = ? where Id = ?', [true, require('moment')().format('YYYY-MM-DD HH:mm:ss'), Id], function(err, results, fields) {
+        if (err) throw err
+        console.log('Delete successfully !!!')
+        res.redirect('/course-mobile')
+    })
+    connection.end();
+}
+//#endregion
+
+//--- Course Mobile
 const ListCourseMobile = function(req, res, next) {
     const connection = mysql.createConnection(connectionString);
     connection.connect();

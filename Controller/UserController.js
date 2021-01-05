@@ -76,8 +76,9 @@ const DeleteUser = function(req, res, next) {
         if (err) throw err
         console.log('Delete successfully !!!')
     })
-    query = connection.query('SELECT * FROM USERTYPE WHERE ID = ?', [Id], function(err, results, fields) {
+    query = connection.query('SELECT * FROM USER WHERE ID = ?', [Id], function(err, results, fields) {
         if (err) throw err
+        console.log(results)
         var roleId = results[0].Role
         res.redirect('/user?UserType=' + roleId)
     })
