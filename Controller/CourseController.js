@@ -13,7 +13,38 @@ const connectionString = {
     database: process.env.DB,
     schema: 'ConfigCourse'
 };
+//#region  List Course 
+const ListCourse = function(req,res,next){
+    var ConfigCourseTypeId = req.query.ConfigCourseTypeId;
+    console.log(ConfigCourseTypeId);
+    if (ConfigCourseTypeId === undefined){
+        const connection = mysql.createConnection(connectionString);
+        connection.connect();
+        var query = connection.query('SELECT * from ConfigCourse where IsDeleted = ? order by ID desc',[0], function(error, results, fields) {
+            if (error) throw error;
+            res.render('./course/listCourse',{title:'Danh sách khóa học',data: results});
+        });
+        connection.end();
+    }
+    else {
+        const connection = mysql.createConnection(connectionString);
+        connection.connect()
+        var title = ""
+        var data = []
+        connection.query('SELECT * from ConfigCourseType where Id = ? and IsDeleted = ? order by ID desc',[ConfigCourseTypeId,0],function(err,results,fields){
+            if (err) throw err;
+            title = results[0].Name
+        })
+        connection.query('SELECT * from ConfigCourse where ConfigCourseTypeId = ? and IsDeleted = ? Order by ID desc',[ConfigCourseTypeId,0],function(err,results,fields){
+            if (err) throw err;
+            data = results
+            res.render('./course/listCourse',{title:title,data: data});
+        })
 
+        connection.end()
+    }
+}
+//#endregion
 //#region Add Course
 const AddNewCourse = function(req,res,next){
     var newItem = {
@@ -39,38 +70,6 @@ const AddNewCourse = function(req,res,next){
       connection.end();
 }
 //#endregion
-//#region  List Course 
-const ListCourse = function(req,res,next){
-    var ConfigCourseTypeId = req.query.ConfigCourseTypeId;
-    console.log(ConfigCourseTypeId);
-    if (ConfigCourseTypeId === undefined){
-        const connection = mysql.createConnection(connectionString);
-        connection.connect();
-        var query = connection.query('SELECT * from ConfigCourse where IsDeleted = ?',[0], function(error, results, fields) {
-            if (error) throw error;
-            res.render('./course/courseWebsite',{title:'Danh sách khóa học',data: results});
-        });
-        connection.end();
-    }
-    else {
-        const connection = mysql.createConnection(connectionString);
-        connection.connect()
-        var title = ""
-        var data = []
-        connection.query('SELECT * from ConfigCourseType where Id = ? and IsDeleted = ?',[ConfigCourseTypeId,0],function(err,results,fields){
-            if (err) throw err;
-            title = results[0].Name
-        })
-        connection.query('SELECT * from ConfigCourse where ConfigCourseTypeId = ? and IsDeleted = ? Order by ID desc',[ConfigCourseTypeId,0],function(err,results,fields){
-            if (err) throw err;
-            data = results
-            res.render('./course/courseWebsite',{title:title,data: data});
-        })
-
-        connection.end()
-    }
-}
-//#endregion
 //#region Delete Course
 const DeleteCourse = function(req, res, next) {
     var Id = req.body.ID
@@ -80,59 +79,16 @@ const DeleteCourse = function(req, res, next) {
     var query = connection.query('UPDATE ConfigCourse set IsDeleted = ?, Log_UpdatedDate = ? where Id = ?', [true, require('moment')().format('YYYY-MM-DD HH:mm:ss'), Id], function(err, results, fields) {
         if (err) throw err
         console.log('Delete successfully !!!')
-        res.redirect('/course-mobile')
+    })
+    query = connection.query('Select * from ConfigCourse where ID = ?',[Id],function(err,results,fields){
+        if (err) throw err;
+        var configCourseTypeId = results[0].ConfigCourseTypeId
+        res.redirect('/course?ConfigCourseTypeId='+configCourseTypeId)
     })
     connection.end();
 }
 //#endregion
-
-//--- Course Mobile
-const ListCourseMobile = function(req, res, next) {
-    const connection = mysql.createConnection(connectionString);
-    connection.connect();
-    connection.query('SELECT * from ConfigCourse Where ConfigCourseTypeId = 2 and IsDeleted = 0 Order by ID desc', function(err, result, fields) {
-        if (err) throw err
-        res.render('./course/courseWebsite', { title: "Khóa học Mobile", data: result })
-    })
-    connection.end();
-}
-const DeleteCourseMobile = function(req, res, next) {
-    var Id = req.body.ID
-    console.log(Id);
-    const connection = mysql.createConnection(connectionString);
-    connection.connect();
-    var query = connection.query('UPDATE ConfigCourse set IsDeleted = ?, Log_UpdatedDate = ? where Id = ?', [true, require('moment')().format('YYYY-MM-DD HH:mm:ss'), Id], function(err, results, fields) {
-        if (err) throw err
-        console.log('Delete successfully !!!')
-        res.redirect('/course-mobile')
-    })
-    connection.end();
-}
-
-//--- Course Website
-const ListCourseWebsite = function(req, res, next) {
-    const connection = mysql.createConnection(connectionString);
-    connection.connect();
-    connection.query('SELECT * from ConfigCourse Where ConfigCourseTypeId = 1 and IsDeleted = 0 order by ID desc', function(err, result, fields) {
-        if (err) throw err
-        console.log(result)
-        res.render('./course/courseWebsite', { title: "Khóa học Website", data: result })
-    })
-    connection.end();
-}
-const DeleteCourseWebsite = function(req, res, next) {
-    var Id = req.body.ID
-    console.log(Id);
-    const connection = mysql.createConnection(connectionString);
-    connection.connect();
-    var query = connection.query('UPDATE ConfigCourse set IsDeleted = ?, Log_UpdatedDate = ? where Id = ?', [true, require('moment')().format('YYYY-MM-DD HH:mm:ss'), Id], function(err, results, fields) {
-        if (err) throw err
-        console.log('Delete successfully !!!')
-        res.redirect('/course-website')
-    })
-    connection.end();
-}
-
+//#region Edit Course
 const EditCourse = function(req, res, next) {
     var updatedItem = {
         Name: req.body.Name,
@@ -148,21 +104,21 @@ const EditCourse = function(req, res, next) {
     connection.connect();
     connection.query('UPDATE ConfigCourse set Name = ? , Intro = ? , Description = ? , Price = ?, MaxStudents = ?, CurrentStudents = ? , Log_UpdatedDate = ? , Status = ? where Id = ?', [updatedItem.Name, updatedItem.Intro, updatedItem.Description, updatedItem.Price, updatedItem.MaxStudents, updatedItem.CurrentStudents, updatedItem.Log_UpdatedDate, updatedItem.Status, req.body.ID], function(err, results, fields) {
         if (err) throw err;
-        res.redirect('/course-website')
+        console.log('Update successfully!!!')
+    })
+    var query = connection.query('Select * from ConfigCourse where ID = ?',[req.body.ID],function(err,results,fields){
+        if (err) throw err;
+        var configCourseTypeId = results[0].ConfigCourseTypeId
+        res.redirect('/course?ConfigCourseTypeId='+configCourseTypeId)
     })
     connection.end();
 }
-
+//#endregion
 
 module.exports = {
     //--- Course
     ListCourse,
     AddNewCourse,
-    //--- Mobile
-    ListCourseMobile,
-    //--- Website
-    ListCourseWebsite,
-    DeleteCourseWebsite,
-    //EditCourse
+    DeleteCourse,
     EditCourse,
 }

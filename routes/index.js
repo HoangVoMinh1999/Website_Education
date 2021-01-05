@@ -34,10 +34,7 @@ router.post('/register', function(req, res, next) {
     })
     //---Course
 router.get('/course', CourseController.ListCourse)
-router.get('/course-mobile', CourseController.ListCourseMobile)
-
-router.get('/course-website', CourseController.ListCourseWebsite)
-router.post('/course-website', CourseController.DeleteCourseWebsite)
+router.post('/course',CourseController.DeleteCourse)
     //---Add Course
 router.get('/add-course', function(req, res, next) {
     const connection = mysql.createConnection(connectionString);
