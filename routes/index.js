@@ -83,4 +83,7 @@ router.get('/add-user', function(req, res, next) {
 router.post('/add-user', UserController.AddNewUser)
     //#endregion
 
+//#region Delete User
+router.post('/user', UserController.DeleteUser)
+    //#endregion
 module.exports = router;

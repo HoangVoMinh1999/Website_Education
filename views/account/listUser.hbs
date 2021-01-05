@@ -36,12 +36,12 @@
                                                 <h5 class="modal-title" id="exampleModalLongTitle">Thông báo</h5>
                                             </div>
                                             <div class="text-dark modal-body">
-                                                <p>Bạn có chắc chắn muốn xóa sản phẩm không?</p>
+                                                <p>Bạn có chắc chắn muốn xóa người dùng này không?</p>
                                             </div>
                                             <div class="modal-footer">
-                                                <form action="/product-list" method="post">
+                                                <form action="/user" method="post">
                                                     <button type="submit" class="btn btn-primary" name="_id"
-                                                        value="{{this._id}}">Yes</button>
+                                                        value="{{this.ID}}">Yes</button>
                                                     <button type="button" class="btn btn-secondary"
                                                         data-dismiss="modal">No</button>
                                                 </form>
