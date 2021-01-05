@@ -9,9 +9,9 @@ const connectionString = {
     host: process.env.HOST,
     user: process.env.USERID,
     password: process.env.PASSWORD,
-    insecureAuth : true,
+    insecureAuth: true,
     database: process.env.DB,
-    schema:'ConfigCourse'
+    schema: 'ConfigCourse'
 };
 
 //--- Course
@@ -44,12 +44,12 @@ const ListCourse = function(req,res,next){
     console.log(ConfigCourseTypeId);
     if (ConfigCourseTypeId === null){
         const connection = mysql.createConnection(connectionString);
-        connection.connect()
-        connection.query('SELECT * from ConfigCourse',function(err,results,fields){
-            if (err) throw err;
-            console.log(results)
-            res.render('./course/courseWebsite',{title:'Tất cả khóa học',data: results});
-        })
+        connection.connect();
+        var query = connection.query('INSERT INTO ConfigCourse SET ?', newItem, function(error, results, fields) {
+            if (error) throw error;
+            console.log("Add Successfully !!!")
+            res.redirect('back')
+        });
         connection.end();
     }
     else {
@@ -73,22 +73,22 @@ const ListCourse = function(req,res,next){
         connection.end()
     }
 }
-//--- Course Mobile
-const ListCourseMobile = function (req, res, next) {
+    //--- Course Mobile
+const ListCourseMobile = function(req, res, next) {
     const connection = mysql.createConnection(connectionString);
     connection.connect();
-    connection.query('SELECT * from ConfigCourse Where ConfigCourseTypeId = 2 and IsDeleted = 0 Order by ID desc', function (err, result, fields) {
+    connection.query('SELECT * from ConfigCourse Where ConfigCourseTypeId = 2 and IsDeleted = 0 Order by ID desc', function(err, result, fields) {
         if (err) throw err
-        res.render('./course/courseWebsite', { title: "Khóa học Mobile",data:result })
+        res.render('./course/courseWebsite', { title: "Khóa học Mobile", data: result })
     })
     connection.end();
 }
-const DeleteCourseMobile = function(req,res,next){
+const DeleteCourseMobile = function(req, res, next) {
     var Id = req.body.ID
     console.log(Id);
     const connection = mysql.createConnection(connectionString);
     connection.connect();
-    var query = connection.query('UPDATE ConfigCourse set IsDeleted = ?, Log_UpdatedDate = ? where Id = ?',[true,require('moment')().format('YYYY-MM-DD HH:mm:ss'),Id],function(err,results,fields){
+    var query = connection.query('UPDATE ConfigCourse set IsDeleted = ?, Log_UpdatedDate = ? where Id = ?', [true, require('moment')().format('YYYY-MM-DD HH:mm:ss'), Id], function(err, results, fields) {
         if (err) throw err
         console.log('Delete successfully !!!')
         res.redirect('/course-mobile')
@@ -97,22 +97,22 @@ const DeleteCourseMobile = function(req,res,next){
 }
 
 //--- Course Website
-const ListCourseWebsite = function (req, res, next) {
+const ListCourseWebsite = function(req, res, next) {
     const connection = mysql.createConnection(connectionString);
     connection.connect();
-    connection.query('SELECT * from ConfigCourse Where ConfigCourseTypeId = 1 and IsDeleted = 0 order by ID desc', function (err, result, fields) {
+    connection.query('SELECT * from ConfigCourse Where ConfigCourseTypeId = 1 and IsDeleted = 0 order by ID desc', function(err, result, fields) {
         if (err) throw err
         console.log(result)
-        res.render('./course/courseWebsite', { title: "Khóa học Website",data:result })
+        res.render('./course/courseWebsite', { title: "Khóa học Website", data: result })
     })
     connection.end();
 }
-const DeleteCourseWebsite = function(req,res,next){
+const DeleteCourseWebsite = function(req, res, next) {
     var Id = req.body.ID
     console.log(Id);
     const connection = mysql.createConnection(connectionString);
     connection.connect();
-    var query = connection.query('UPDATE ConfigCourse set IsDeleted = ?, Log_UpdatedDate = ? where Id = ?',[true,require('moment')().format('YYYY-MM-DD HH:mm:ss'),Id],function(err,results,fields){
+    var query = connection.query('UPDATE ConfigCourse set IsDeleted = ?, Log_UpdatedDate = ? where Id = ?', [true, require('moment')().format('YYYY-MM-DD HH:mm:ss'), Id], function(err, results, fields) {
         if (err) throw err
         console.log('Delete successfully !!!')
         res.redirect('/course-website')
@@ -120,20 +120,20 @@ const DeleteCourseWebsite = function(req,res,next){
     connection.end();
 }
 
-const EditCourse = function(req,res,next){
+const EditCourse = function(req, res, next) {
     var updatedItem = {
-        Name : req.body.Name,
-        Intro : req.body.Intro,
-        Description:req.body.Description,
-        Price:req.body.Price,
-        Log_UpdatedDate : require('moment')().format('YYYY-MM-DD HH:mm:ss'),
-        MaxStudents : req.body.MaxStudents,
-        CurrentStudents : req.body.CurrentStudents,
-        Status:req.body.Status
+        Name: req.body.Name,
+        Intro: req.body.Intro,
+        Description: req.body.Description,
+        Price: req.body.Price,
+        Log_UpdatedDate: require('moment')().format('YYYY-MM-DD HH:mm:ss'),
+        MaxStudents: req.body.MaxStudents,
+        CurrentStudents: req.body.CurrentStudents,
+        Status: req.body.Status
     }
     const connection = mysql.createConnection(connectionString);
     connection.connect();
-    connection.query('UPDATE ConfigCourse set Name = ? , Intro = ? , Description = ? , Price = ?, MaxStudents = ?, CurrentStudents = ? , Log_UpdatedDate = ? , Status = ? where Id = ?',[updatedItem.Name,updatedItem.Intro,updatedItem.Description,updatedItem.Price,updatedItem.MaxStudents,updatedItem.CurrentStudents,updatedItem.Log_UpdatedDate,updatedItem.Status,req.body.ID],function(err,results,fields){
+    connection.query('UPDATE ConfigCourse set Name = ? , Intro = ? , Description = ? , Price = ?, MaxStudents = ?, CurrentStudents = ? , Log_UpdatedDate = ? , Status = ? where Id = ?', [updatedItem.Name, updatedItem.Intro, updatedItem.Description, updatedItem.Price, updatedItem.MaxStudents, updatedItem.CurrentStudents, updatedItem.Log_UpdatedDate, updatedItem.Status, req.body.ID], function(err, results, fields) {
         if (err) throw err;
         res.redirect('/course-website')
     })
