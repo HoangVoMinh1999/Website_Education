@@ -6,7 +6,7 @@ var mysql = require('mysql')
 // Config database
 const connectionString = {
   host: process.env.HOST,
-  user: process.env.USERNAME,
+  user: process.env.USERID,
   password: process.env.PASSWORD,
   insecureAuth : true,
   database: process.env.DB,
@@ -60,4 +60,13 @@ router.get('/edit-course', function (req, res, next) {
   connection.end()
 })
 router.post('/edit-course',CourseController.EditCourse)
+
+
+
+
+
+///--- User
+router.get('/user', function (req, res, next){
+  res.render('./user/user', {title: 'Thông tin tài khoản'})
+})
 module.exports = router;

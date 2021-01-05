@@ -7,7 +7,7 @@ var mysql = require('mysql')
 // Config database
 const connectionString = {
     host: process.env.HOST,
-    user: process.env.USERNAME,
+    user: process.env.USERID,
     password: process.env.PASSWORD,
     insecureAuth : true,
     database: process.env.DB,
@@ -128,6 +128,12 @@ const EditCourse = function(req,res,next){
         res.redirect('/course-website')
     })
     connection.end();
+}
+
+const ListUser = function(req, res, next) {
+    const connection = mysql.createConnection(connectionString);
+    connection.connect;
+    connection.query('SELECT * ')
 }
 
 
