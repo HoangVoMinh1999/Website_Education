@@ -81,28 +81,49 @@ const AddNewUser = function(req, res, next) {
 
 //#region Delete User
 const DeleteUser = function(req, res, next) {
-    var Id = req.body.ID
-    console.log(Id);
-    const connection = mysql.createConnection(connectionString);
-    connection.connect();
-    var query = connection.query('UPDATE USER SET IsDeleted = ?, Log_UpdatedDate = ? WHERE ID = ?', [true, require('moment')().format('YYYY-MM-DD HH:mm:ss'), Id], function(err, results, fields) {
-        if (err) throw err
-        console.log('Delete successfully !!!')
-    })
-    query = connection.query('SELECT * FROM USER WHERE ID = ?', [Id], function(err, results, fields) {
-        if (err) throw err
-        console.log(results)
-        var roleId = results[0].Role
-        res.redirect('/user?UserType=' + roleId)
-    })
-    connection.end();
-}
+        var Id = req.body.ID
+        console.log(Id);
+        const connection = mysql.createConnection(connectionString);
+        connection.connect();
+        var query = connection.query('UPDATE USER SET IsDeleted = ?, Log_UpdatedDate = ? WHERE ID = ?', [true, require('moment')().format('YYYY-MM-DD HH:mm:ss'), Id], function(err, results, fields) {
+            if (err) throw err
+            console.log('Delete successfully !!!')
+        })
+        query = connection.query('SELECT * FROM USER WHERE ID = ?', [Id], function(err, results, fields) {
+            if (err) throw err
+            console.log(results)
+            var roleId = results[0].Role
+            res.redirect('/user?UserType=' + roleId)
+        })
+        connection.end();
+    }
+    //#endregion
 
-//#endregion
-
+//#region Edit User
+const EditUser = function(req, res, next) {
+        var updatedItem = {
+            Username: req.body.Username,
+            Email: req.body.Email,
+            Log_UpdatedDate: require('moment')().format('YYYY-MM-DD HH:mm:ss'),
+        }
+        const connection = mysql.createConnection(connectionString);
+        connection.connect();
+        connection.query('UPDATE USER SET Username = ? , Email = ? , Log_UpdatedDate = ? , WHERE ID = ?', [updatedItem.Username, updatedItem.Email, updatedItem.Log_UpdatedDate, req.body.ID], function(err, results, fields) {
+            if (err) throw err;
+            console.log('Update successfully!!!')
+        })
+        var query = connection.query('SELECT * FROM USER where ID = ?', [req.body.ID], function(err, results, fields) {
+            if (err) throw err;
+            var roleId = results[0].Role
+            res.redirect('/user?UserType=' + roleId)
+        })
+        connection.end();
+    }
+    //#endregion
 
 module.exports = {
     ListUser,
     AddNewUser,
     DeleteUser,
+    EditUser,
 }

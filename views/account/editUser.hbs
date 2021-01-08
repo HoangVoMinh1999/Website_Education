@@ -1,0 +1,157 @@
+<div class="single-product-tab-area mg-b-30">
+    <!-- Single pro tab review Start-->
+    <div class="single-pro-review-area">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="review-tab-pro-inner">
+                        <ul id="myTab3" class="tab-review-design">
+                            <li class="active"><a href="#description"><i class="icon nalika-edit"
+                                        aria-hidden="true"></i>Thông tin người dùng</a></li>
+                            <li><a href="#reviews"><i class="icon nalika-picture" aria-hidden="true"></i>Hình ảnh</a>
+                            </li>
+                        </ul>
+                        <div id="myTabContent" class="tab-content custom-product-edit">
+                            <div class="product-tab-list tab-pane fade active in" id="description">
+                                <form action="/edit-user" method="POST">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                            <div class="review-content-section">
+                                                <div class="input-group mg-b-pro-edt">
+                                                    <span class="input-group-addon"><i class="icon nalika-user"
+                                                            aria-hidden="true"> Username</i></span>
+                                                    <input type="text" class="form-control" name="Name"
+                                                        placeholder="Nhập username" value="{{data.Name}}">
+                                                </div>
+                                                <div class="input-group mg-b-pro-edt">
+                                                    <span class="input-group-addon"><i class="fa fa-usd"
+                                                            aria-hidden="true"> Giá tiền</i></span>
+                                                    <input type="text" class="form-control" name="Price"
+                                                        placeholder="Giá của khóa học" value="{{data.Price}}">
+                                                </div>
+                                                <div class="input-group mg-b-pro-edt">
+                                                    <span class="input-group-addon"><i class="icon nalika-favorites"
+                                                            aria-hidden="true"> SL tối đa người học</i></span>
+                                                    <input type="text" class="form-control" name="MaxStudents"
+                                                        placeholder="Số lượng học viên có thể tham gia"
+                                                        value="{{data.MaxStudents}}">
+                                                </div>
+                                                <div class="input-group mg-b-pro-edt">
+                                                    <span class="input-group-addon"><i class="icon nalika-user"
+                                                            aria-hidden="true"> SL người đã tham gia</i></span>
+                                                    <input type="text" class="form-control" name="CurrentStudents"
+                                                        placeholder="Nhập tên của khóa học"
+                                                        value="{{data.CurrentStudents}}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                            <select name="Status"
+                                                class="form-control mg-b-pro-edt pro-edt-select form-control-primary"
+                                                aria-placeholder="Chọn trạng thái">
+                                                <option value="{{data.Status}}">{{data.Status}}</option>
+                                                <option value="Active">"Active"</option>
+                                                <option value="Pause">"Pause"</option>
+                                                <option value="Disable">"Disable"</option>
+                                            </select>
+                                            <div class="input-group mg-b-pro-edt">
+                                                <span class="input-group-addon"><i class="icon nalika-user"
+                                                        aria-hidden="true"></i></span>
+                                                <textarea class="form-control" name="Intro" cols="30" rows="7"
+                                                    placeholder="Mô tả chung về khóa học">{{data.Intro}}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="text-center custom-pro-edt-ds">
+                                        <button type="submit" name="ID" value="{{data.ID}}"
+                                            class="btn btn-ctl-bt waves-effect waves-light m-r-10">Lưu
+                                        </button>
+                                        <button type="button" class="btn btn-ctl-bt waves-effect waves-light"
+                                            onclick="Previous()">Quay lại</button>
+                                    </div>
+                                </div>
+                            </div>
+                            </form>
+                        </div>
+                        <div class="product-tab-list tab-pane fade" id="reviews">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="review-content-section">
+                                        <div class="row">
+                                            <div class="col-lg-4">
+                                                <div class="pro-edt-img mg-b-0">
+                                                    <img src="img/new-product/7-small.jpg" alt="" />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-8">
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="product-edt-pix-wrap">
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">TT</span>
+                                                                <input type="text" class="form-control"
+                                                                    placeholder="Label Name">
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-lg-6">
+                                                                    <div class="form-radio">
+                                                                        <form>
+                                                                            <div class="radio radiofill">
+                                                                                <label>
+                                                                                    <input type="radio" name="radio"><i
+                                                                                        class="helper"></i>Largest
+                                                                                    Image
+                                                                                </label>
+                                                                            </div>
+                                                                            <div class="radio radiofill">
+                                                                                <label>
+                                                                                    <input type="radio" name="radio"><i
+                                                                                        class="helper"></i>Medium
+                                                                                    Image
+                                                                                </label>
+                                                                            </div>
+                                                                            <div class="radio radiofill">
+                                                                                <label>
+                                                                                    <input type="radio" name="radio"><i
+                                                                                        class="helper"></i>Small
+                                                                                    Image
+                                                                                </label>
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-6">
+                                                                    <div class="product-edt-remove">
+                                                                        <button type="button"
+                                                                            class="btn btn-ctl-bt waves-effect waves-light">Remove
+                                                                            <i class="fa fa-times"
+                                                                                aria-hidden="true"></i>
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<script>
+    function Previous() {
+        window.history.go(-1);
+    }
+</script>

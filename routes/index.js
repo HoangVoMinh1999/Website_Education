@@ -34,7 +34,7 @@ router.post('/register', function(req, res, next) {
     })
     //---Course
 router.get('/course', CourseController.ListCourse)
-router.post('/course',CourseController.DeleteCourse)
+router.post('/course', CourseController.DeleteCourse)
     //---Add Course
 router.get('/add-course', function(req, res, next) {
     const connection = mysql.createConnection(connectionString);
@@ -83,4 +83,18 @@ router.post('/add-user', UserController.AddNewUser)
 //#region Delete User
 router.post('/user', UserController.DeleteUser)
     //#endregion
+
+//#region Edit User
+router.get('/edit-user', function(req, res, next) {
+    const connection = mysql.createConnection(connectionString);
+    connection.connect();
+    connection.query('SELECT * FROM USER WHERE ID = ?', [req.query.ID], function(err, results, fields) {
+        console.log(results)
+        res.render('./user/editUser', { title: 'Cập nhật thông tin người dùng', data: results[0] })
+    })
+    connection.end()
+})
+router.post('/edit-user', UserController.EditUser)
+
+//#endregion
 module.exports = router;
