@@ -90,7 +90,7 @@ router.get('/edit-user', function(req, res, next) {
     connection.connect();
     connection.query('SELECT * FROM USER WHERE ID = ?', [req.query.ID], function(err, results, fields) {
         console.log(results)
-        res.render('./user/editUser', { title: 'Cập nhật thông tin người dùng', data: results[0] })
+        res.render('./account/editUser', { title: 'Cập nhật thông tin người dùng', data: results[0] })
     })
     connection.end()
 })

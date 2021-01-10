@@ -53,6 +53,7 @@ const AddNewUser = function(req, res, next) {
             Password: hashSync(req.body.Password, 10),
             Email: req.body.Email,
             Role: req.body.Role,
+            Status: req.body.Status,
             Log_CreatedDate: require('moment')().format('YYYY-MM-DD HH:mm:ss'),
             Log_UpdatedDate: require('moment')().format('YYYY-MM-DD HH:mm:ss'),
         }
@@ -102,13 +103,12 @@ const DeleteUser = function(req, res, next) {
 //#region Edit User
 const EditUser = function(req, res, next) {
         var updatedItem = {
-            Username: req.body.Username,
-            Email: req.body.Email,
+            Status: req.body.Status,
             Log_UpdatedDate: require('moment')().format('YYYY-MM-DD HH:mm:ss'),
         }
         const connection = mysql.createConnection(connectionString);
         connection.connect();
-        connection.query('UPDATE USER SET Username = ? , Email = ? , Log_UpdatedDate = ? , WHERE ID = ?', [updatedItem.Username, updatedItem.Email, updatedItem.Log_UpdatedDate, req.body.ID], function(err, results, fields) {
+        connection.query('UPDATE USER SET Status = ? , Log_UpdatedDate = ? WHERE ID = ?', [updatedItem.Status, updatedItem.Log_UpdatedDate, req.body.ID], function(err, results, fields) {
             if (err) throw err;
             console.log('Update successfully!!!')
         })

@@ -12,7 +12,7 @@
                             <th>Avatar</th>
                             <th>Username</th>
                             <th>Email</th>
-                            <th>Setting</th>
+                            <th>Chỉnh sửa</th>
                         </tr>
                         {{#each data}}
                         <tr>
@@ -20,9 +20,11 @@
                             <td>{{this.Username}}</td>
                             <td>{{this.Email}}</td>
                             <td>
-                                <a class="btn btn-ctl-bt waves-effect m-r-10 pd-setting-ed" href="/edit-course">
-                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                </a>
+                                <form action="/edit-user">
+                                    <button type="submit" name="ID" value="{{this.ID}}" class="btn btn-ctl-bt waves-effect m-r-10 pd-setting-ed">
+                                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                    </button>
+                                </form>
                                 <button data-toggle="modal" title="Trash" class="pd-setting-ed"
                                     data-target="#exampleModalCenter"><i class="fa fa-trash-o"
                                         aria-hidden="true"></i></button>
