@@ -103,12 +103,13 @@ const DeleteUser = function(req, res, next) {
 //#region Edit User
 const EditUser = function(req, res, next) {
         var updatedItem = {
+            Role: req.body.Role,
             Status: req.body.Status,
             Log_UpdatedDate: require('moment')().format('YYYY-MM-DD HH:mm:ss'),
         }
         const connection = mysql.createConnection(connectionString);
         connection.connect();
-        connection.query('UPDATE USER SET Status = ? , Log_UpdatedDate = ? WHERE ID = ?', [updatedItem.Status, updatedItem.Log_UpdatedDate, req.body.ID], function(err, results, fields) {
+        connection.query('UPDATE USER SET Role = ?, Status = ? , Log_UpdatedDate = ? WHERE ID = ?', [updatedItem.Role, updatedItem.Status, updatedItem.Log_UpdatedDate, req.body.ID], function(err, results, fields) {
             if (err) throw err;
             console.log('Update successfully!!!')
         })

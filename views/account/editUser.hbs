@@ -20,8 +20,8 @@
                                                 <div class="input-group mg-b-pro-edt">
                                                     <span class="input-group-addon"><i class="icon nalika-user"
                                                             aria-hidden="true"> Username</i></span>
-                                                    <input type="text" class="form-control" name="Name"
-                                                        placeholder="Nhập username" value="{{data.Name}}">
+                                                    <input type="text" class="form-control" name="Username"
+                                                        placeholder="Nhập username" value="{{data.Username}}">
                                                 </div>
                                                 <div class="input-group mg-b-pro-edt">
                                                     <span class="input-group-addon"><i class="fa fa-envelope"
@@ -29,13 +29,14 @@
                                                     <input type="text" class="form-control" name="Email"
                                                         placeholder="Nhập email" value="{{data.Email}}">
                                                 </div>
-                                                <div class="input-group mg-b-pro-edt">
-                                                    <span class="input-group-addon"><i class="icon nalika-favorites"
-                                                            aria-hidden="true"> Phân quyền</i></span>
-                                                    <input type="text" class="form-control" name="Role"
-                                                        placeholder="Phân quyền"
-                                                        value="{{data.Role}}">
-                                                </div>
+                                                <select name="Role"
+                                                    class="form-control mg-b-pro-edt pro-edt-select form-control-primary"
+                                                    aria-placeholder="Chọn phân quyền">
+                                                    <option value="{{CurrentRole.ID}}">{{CurrentRole.Role}}</option>
+                                                    {{#each ListRole}}
+                                                        <option value="{{this.ID}}">{{this.Role}}</option>
+                                                    {{/each}}
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
