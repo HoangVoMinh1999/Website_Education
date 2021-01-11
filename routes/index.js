@@ -22,9 +22,7 @@ router.get('/', function(req, res, next) {
 router.get('/login', function(req, res, next) {
     res.render('login', { title: 'Login', layout: 'loginLayout' })
 })
-router.post('/login', function(req, res, next) {
-        res.redirect('/')
-    })
+router.post('/login', UserController.Login)
     //---Register
 router.get('/register', function(req, res, next) {
     res.render('register', { title: 'register', layout: 'loginLayout' })
@@ -107,7 +105,6 @@ router.get('/edit-user', function(req, res, next) {
                 listRole = results;
                 res.render('./account/editUser', { title: 'Cập nhật thông tin người dùng', data: data, CurrentRole: currentRole, ListRole: listRole })
             })
-            console.log(currentRole, listRole)
             connection1.end();
         }
     })
@@ -116,4 +113,6 @@ router.get('/edit-user', function(req, res, next) {
 router.post('/edit-user', UserController.EditUser)
 
 //#endregion
+
+
 module.exports = router;

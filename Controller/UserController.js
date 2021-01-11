@@ -2,7 +2,7 @@ require('dotenv').config()
 
 const router = require("../routes")
 var mysql = require('mysql');
-const { hashSync } = require('bcryptjs');
+const bcrypt = require('bcryptjs');
 // --- Config database ---
 const connectionString = {
     host: process.env.HOST,
@@ -50,7 +50,7 @@ const ListUser = function(req, res, next) {
 const AddNewUser = function(req, res, next) {
         var newItem = {
             Username: req.body.Username,
-            Password: hashSync(req.body.Password, 10),
+            Password: bcrypt.hashSync(req.body.Password, 10),
             Email: req.body.Email,
             Role: req.body.Role,
             Status: req.body.Status,
@@ -122,9 +122,43 @@ const EditUser = function(req, res, next) {
     }
     //#endregion
 
+//#region Single by Username
+const SingleByUsername = function(username) {
+
+    }
+    //#endregion
+
+//#region Login
+const Login = async function(req, res, next) {
+        var username = req.body.Username
+        var password = req.body.Password
+        var msg = ''
+        var data = ''
+        const connection = mysql.createConnection(connectionString)
+        connection.connect()
+        connection.query('SELECT * FROM USER WHERE Username = ?', [username], function(err, results, fields) {
+            if (err) throw err
+            if (results.length === 0) {
+                msg = ''
+            } else {
+                data = results[0]
+                console.log(data.Password)
+                console.log(password)
+                if (bcrypt.compareSync(password, data.Password)) {
+                    res.redirect('/')
+                } else {
+                    res.redirect('/login')
+                }
+            }
+        })
+    }
+    //#endregion
+
 module.exports = {
     ListUser,
     AddNewUser,
     DeleteUser,
     EditUser,
+    SingleByUsername,
+    Login,
 }
