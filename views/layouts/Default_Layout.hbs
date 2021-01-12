@@ -98,8 +98,10 @@
               </a>
               <ul class="submenu-angle" aria-expanded="true">
                 <form action="/course">
-                  <li><button class="btn btn-link btn-lg link-unstyled" type="submit" name="ConfigCourseTypeId" value="1"><span class="mini-sub-pro">Lập trình website</span></button></li>
-                  <li><button class="btn btn-link btn-lg link-unstyled" type="submit" name="ConfigCourseTypeId" value="2"><span class="mini-sub-pro">Lập trình mobile</span></button></li>
+                  <li><button class="btn btn-link btn-lg link-unstyled" type="submit" name="ConfigCourseTypeId"
+                      value="1"><span class="mini-sub-pro">Lập trình website</span></button></li>
+                  <li><button class="btn btn-link btn-lg link-unstyled" type="submit" name="ConfigCourseTypeId"
+                      value="2"><span class="mini-sub-pro">Lập trình mobile</span></button></li>
                 </form>
               </ul>
             </li>
@@ -108,9 +110,12 @@
                 <span class="mini-click-non">Quản lý tài khoản</span></a>
               <ul class="submenu-angle" aria-expanded="false">
                 <form action="/user">
-                  <li><button class="btn btn-link btn-lg link-unstyled" type="submit" name="UserType" value="1"><span class="mini-sub-pro">Admin</span></button></li>
-                  <li><button class="btn btn-link btn-lg link-unstyled" type="submit" name="UserType" value="2"><span class="mini-sub-pro">Giảng viên</span></button></li>
-                  <li><button class="btn btn-link btn-lg link-unstyled" type="submit" name="UserType" value="3"><span class="mini-sub-pro">Học viên</span></button></li>
+                  <li><button class="btn btn-link btn-lg link-unstyled" type="submit" name="UserType" value="1"><span
+                        class="mini-sub-pro">Admin</span></button></li>
+                  <li><button class="btn btn-link btn-lg link-unstyled" type="submit" name="UserType" value="2"><span
+                        class="mini-sub-pro">Giảng viên</span></button></li>
+                  <li><button class="btn btn-link btn-lg link-unstyled" type="submit" name="UserType" value="3"><span
+                        class="mini-sub-pro">Học viên</span></button></li>
                 </form>
               </ul>
             </li>
@@ -301,29 +306,36 @@
                           </div>
                         </li>
                         <li class="nav-item">
+                          {{#if IsAuth}}
                           <a href="#" data-toggle="dropdown" role="button" aria-expanded="false"
-                            class="nav-link dropdown-toggle">
-                            <i class="icon nalika-user nalika-user-rounded header-riht-inf" aria-hidden="true"></i>
-                            <span class="admin-name">Advanda Cro</span>
-                            <i class="icon nalika-down-arrow nalika-angle-dw nalika-icon"></i>
-                          </a>
-                          <ul role="menu" class="dropdown-header-top author-log dropdown-menu animated zoomIn">
-                            <li><a href="register.html"><span class="icon nalika-home author-log-ic"></span>
-                                Register</a>
-                            </li>
-                            <li><a href="#"><span class="icon nalika-user author-log-ic"></span> My
-                                Profile</a>
-                            </li>
-                            <li><a href="lock.html"><span class="icon nalika-diamond author-log-ic"></span>
-                                Lock</a>
-                            </li>
-                            <li><a href="#"><span class="icon nalika-settings author-log-ic"></span>
-                                Settings</a>
-                            </li>
-                            <li><a href="/login"><span class="icon nalika-unlocked author-log-ic"></span>
-                                Log Out</a>
-                            </li>
-                          </ul>
+                          class="nav-link dropdown-toggle">
+                          <i class="icon nalika-user nalika-user-rounded header-riht-inf" aria-hidden="true"></i>
+                          <span class="admin-name">{{AuthUser.Username}}</span>
+                          <i class="icon nalika-down-arrow nalika-angle-dw nalika-icon"></i>
+                        </a>
+                        <ul role="menu" class="dropdown-header-top author-log dropdown-menu animated zoomIn">
+                          <li><a href="register.html"><span class="icon nalika-home author-log-ic"></span>
+                              Register</a>
+                          </li>
+                          <li><a href="#"><span class="icon nalika-user author-log-ic"></span> My
+                              Profile</a>
+                          </li>
+                          <li><a href="lock.html"><span class="icon nalika-diamond author-log-ic"></span>
+                              Lock</a>
+                          </li>
+                          <li><a href="#"><span class="icon nalika-settings author-log-ic"></span>
+                              Settings</a>
+                          </li>
+                          <li><a href="/login"><span class="icon nalika-unlocked author-log-ic"></span>
+                              Log Out</a>
+                          </li>
+                        </ul>
+                          {{else}}
+                        <li><a href="/login"><span class="fa fa-sign-in"></span>
+                            Sign In</a>
+                        </li>
+                        {{/if}}
+
                         </li>
                       </ul>
                     </div>

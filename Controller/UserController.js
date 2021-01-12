@@ -3,6 +3,7 @@ require('dotenv').config()
 const router = require("../routes")
 var mysql = require('mysql');
 const bcrypt = require('bcryptjs');
+var session = require('express-session');
 // --- Config database ---
 const connectionString = {
     host: process.env.HOST,
@@ -145,12 +146,15 @@ const Login = async function(req, res, next) {
                 console.log(data.Password)
                 console.log(password)
                 if (bcrypt.compareSync(password, data.Password)) {
+                    req.session.isAuth = true
+                    req.session.authUser = data
                     res.redirect('/')
                 } else {
                     res.redirect('/login')
                 }
             }
         })
+        connection.end()
     }
     //#endregion
 

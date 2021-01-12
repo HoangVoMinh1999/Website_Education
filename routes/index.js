@@ -3,6 +3,7 @@ var router = express.Router();
 var CourseController = require('../Controller/CourseController')
 var UserController = require('../Controller/UserController')
 var mysql = require('mysql')
+var session = require('express-session')
 
 // Config database
 const connectionString = {
@@ -16,7 +17,9 @@ const connectionString = {
 /* GET home page. */
 //--- Index
 router.get('/', function(req, res, next) {
-    res.render('index', { title: 'Trang chủ' })
+    console.log(req.session.isAuth);
+    console.log(req.session.authUser);
+    res.render('index', { title: 'Trang chủ', IsAuth: isAuth, AuthUser: authUser })
 });
 //---Login
 router.get('/login', function(req, res, next) {
