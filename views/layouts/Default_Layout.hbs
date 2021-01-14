@@ -71,6 +71,7 @@
 
   <div class="left-sidebar-pro">
     <nav id="sidebar" class="">
+      {{#if IsAuth}}
       <div class="sidebar-header">
         <a href="/"><img class="main-logo" src="img/logo/logo.png" alt="" /></a>
         <strong><img src="img/logo/logosn.png" alt="" /></strong>
@@ -78,59 +79,61 @@
       <div class="nalika-profile">
         <div class="profile-dtl">
           <a href="#"><img src="img/notification/4.jpg" alt="" /></a>
-          <h2>Lakian <span class="min-dtn">Das</span></h2>
+          <h2>{{AuthUser.Username}}</span></h2>
         </div>
-        <div class="profile-social-dtl">
-          <ul class="dtl-social">
-            <li><a href="#"><i class="icon nalika-facebook"></i></a></li>
-            <li><a href="#"><i class="icon nalika-twitter"></i></a></li>
-            <li><a href="#"><i class="icon nalika-linkedin"></i></a></li>
-          </ul>
+        {{else}}
+        <div class="sidebar-header">
+          <a href="/"><img class="main-logo" src="img/logo/logo.png" alt="" /></a>
+          <strong><img src="img/logo/logosn.png" alt="" /></strong>
         </div>
-      </div>
-      <div class="left-custom-menu-adp-wrap comment-scrollbar">
-        <nav class="sidebar-nav left-sidebar-menu-pro">
-          <ul class="metismenu" id="menu1">
-            <li class="">
-              <a class="has-arrow" href="/">
-                <i class="icon nalika-home icon-wrap"></i>
-                <span class="mini-click-non">Danh sách khóa học</span>
-              </a>
-              <ul class="submenu-angle" aria-expanded="true">
-                <form action="/course">
-                  <li><button class="btn btn-link btn-lg link-unstyled" type="submit" name="ConfigCourseTypeId"
-                      value="1"><span class="mini-sub-pro">Lập trình website</span></button></li>
-                  <li><button class="btn btn-link btn-lg link-unstyled" type="submit" name="ConfigCourseTypeId"
-                      value="2"><span class="mini-sub-pro">Lập trình mobile</span></button></li>
-                </form>
-              </ul>
-            </li>
-            <li>
-              <a class="has-arrow" href="#" aria-expanded="false"><i class="icon nalika-mail icon-wrap"></i>
-                <span class="mini-click-non">Quản lý tài khoản</span></a>
-              <ul class="submenu-angle" aria-expanded="false">
-                <form action="/user">
-                  <li><button class="btn btn-link btn-lg link-unstyled" type="submit" name="UserType" value="1"><span
-                        class="mini-sub-pro">Admin</span></button></li>
-                  <li><button class="btn btn-link btn-lg link-unstyled" type="submit" name="UserType" value="2"><span
-                        class="mini-sub-pro">Giảng viên</span></button></li>
-                  <li><button class="btn btn-link btn-lg link-unstyled" type="submit" name="UserType" value="3"><span
-                        class="mini-sub-pro">Học viên</span></button></li>
-                </form>
-              </ul>
-            </li>
-            <li>
-              <a class="has-arrow" href="mailbox.html" aria-expanded="false"><i
-                  class="icon nalika-setting icon-wrap"></i>
-                <span class="mini-click-non">Settings</span></a>
-              <ul class="submenu-angle" aria-expanded="false">
-                <li><a href="mailbox.html"><span class="mini-sub-pro">Tài khoản</span></a></li>
-                <li><a href="/login"><span class="mini-sub-pro">Đăng xuất</span></a></li>
-              </ul>
-            </li>
-          </ul>
-        </nav>
-      </div>
+        <div class="nalika-profile">
+          <div class="profile-dtl">
+            <a href="#"><img src="img/notification/4.jpg" alt="" /></a>
+            <h2>Lakian <span class="min-dtn">Das</span></h2>
+          </div>
+          {{/if}}
+          <div class="profile-social-dtl">
+            <ul class="dtl-social">
+              <li><a href="#"><i class="icon nalika-facebook"></i></a></li>
+              <li><a href="#"><i class="icon nalika-twitter"></i></a></li>
+              <li><a href="#"><i class="icon nalika-linkedin"></i></a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="left-custom-menu-adp-wrap comment-scrollbar">
+          <nav class="sidebar-nav left-sidebar-menu-pro">
+            <ul class="metismenu" id="menu1">
+              <li class="">
+                <a class="has-arrow" href="/">
+                  <i class="fa fa-graduation-cap icon-wrap"></i>
+                  <span class="mini-click-non">Quản lý khóa học</span>
+                </a>
+                <ul class="submenu-angle" aria-expanded="true">
+                  <form action="/course">
+                    <li><button class="btn btn-link btn-lg link-unstyled" type="submit" name="ConfigCourseTypeId"
+                        value="1"><span class="mini-sub-pro">Lập trình website</span></button></li>
+                    <li><button class="btn btn-link btn-lg link-unstyled" type="submit" name="ConfigCourseTypeId"
+                        value="2"><span class="mini-sub-pro">Lập trình mobile</span></button></li>
+                  </form>
+                </ul>
+              </li>
+              <li>
+                <a class="has-arrow" href="#" aria-expanded="false"><i class="fa fa-user icon-wrap"></i>
+                  <span class="mini-click-non">Quản lý tài khoản</span></a>
+                <ul class="submenu-angle" aria-expanded="false">
+                  <form action="/user">
+                    <li><button class="btn btn-link btn-lg link-unstyled" type="submit" name="Role" value="1"><span
+                          class="mini-sub-pro">Admin</span></button></li>
+                    <li><button class="btn btn-link btn-lg link-unstyled" type="submit" name="Role" value="2"><span
+                          class="mini-sub-pro">Giảng viên</span></button></li>
+                    <li><button class="btn btn-link btn-lg link-unstyled" type="submit" name="Role" value="3"><span
+                          class="mini-sub-pro">Học viên</span></button></li>
+                  </form>
+                </ul>
+              </li>
+            </ul>
+          </nav>
+        </div>
     </nav>
   </div>
   <!-- Start Welcome area -->
@@ -308,31 +311,30 @@
                         <li class="nav-item">
                           {{#if IsAuth}}
                           <a href="#" data-toggle="dropdown" role="button" aria-expanded="false"
-                          class="nav-link dropdown-toggle">
-                          <i class="icon nalika-user nalika-user-rounded header-riht-inf" aria-hidden="true"></i>
-                          <span class="admin-name">{{AuthUser.Username}}</span>
-                          <i class="icon nalika-down-arrow nalika-angle-dw nalika-icon"></i>
-                        </a>
-                        <ul role="menu" class="dropdown-header-top author-log dropdown-menu animated zoomIn">
-                          <li><a href="register.html"><span class="icon nalika-home author-log-ic"></span>
-                              Register</a>
-                          </li>
-                          <li><a href="#"><span class="icon nalika-user author-log-ic"></span> My
-                              Profile</a>
-                          </li>
-                          <li><a href="lock.html"><span class="icon nalika-diamond author-log-ic"></span>
-                              Lock</a>
-                          </li>
-                          <li><a href="#"><span class="icon nalika-settings author-log-ic"></span>
-                              Settings</a>
-                          </li>
-                          <li><a href="/login"><span class="icon nalika-unlocked author-log-ic"></span>
-                              Log Out</a>
-                          </li>
-                        </ul>
-                          {{else}}
+                            class="nav-link dropdown-toggle">
+                            <i class="icon nalika-user nalika-user-rounded header-riht-inf" aria-hidden="true"></i>
+                            <span class="admin-name">{{AuthUser.Username}}</span>
+                            <i class="icon nalika-down-arrow nalika-angle-dw nalika-icon"></i>
+                          </a>
+                          <ul role="menu" class="dropdown-header-top author-log dropdown-menu animated zoomIn">
+                            <li><a href="#"><span class="icon nalika-user author-log-ic"></span>
+                                My Profile</a>
+                            </li>
+                            <form id="frmLogout" method="POST" action="/logout"></form>
+                            <li><a href="javascript: $('#frmLogout').submit()"><span
+                                  class="icon nalika-unlocked author-log-ic"></span>
+                                Log Out</a>
+                            </li>
+                          </ul>
+                        </li>
+                        {{else}}
+                        <li class="nav-item">
+                        <li><a href="/add-user"><span class="icon nalika-home author-log-ic"></span>
+                            Register</a>
+                        </li>
                         <li><a href="/login"><span class="fa fa-sign-in"></span>
                             Sign In</a>
+                        </li>
                         </li>
                         {{/if}}
 
@@ -503,8 +505,7 @@
                         <i class="icon nalika-home"></i>
                       </div>
                       <div class="breadcomb-ctn">
-                        <h2>Dashboard Two</h2>
-                        <p>Welcome to Nalika <span class="bread-ntd">Admin Template</span></p>
+                        <h2>{{title}}</h2>
                       </div>
                     </div>
                   </div>

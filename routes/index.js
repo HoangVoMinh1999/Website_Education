@@ -12,20 +12,26 @@ const connectionString = {
     password: process.env.PASSWORD,
     insecureAuth: true,
     database: process.env.DB,
-    schema: 'ConfigCourse'
 };
 /* GET home page. */
 //--- Index
 router.get('/', function(req, res, next) {
-    console.log(req.session.isAuth);
-    console.log(req.session.authUser);
+    // console.log(req.session.isAuth);
+    let isAuth = req.session.isAuth || false;
+    // console.log(req.session.authUser);
+    let authUser = req.session.authUser || false;
     res.render('index', { title: 'Trang chủ', IsAuth: isAuth, AuthUser: authUser })
 });
+
+
 //---Login
 router.get('/login', function(req, res, next) {
     res.render('login', { title: 'Login', layout: 'loginLayout' })
 })
 router.post('/login', UserController.Login)
+
+//---Logout
+router.post('/logout', UserController.Logout)
     //---Register
 router.get('/register', function(req, res, next) {
     res.render('register', { title: 'register', layout: 'loginLayout' })
@@ -62,6 +68,12 @@ router.post('/edit-course', CourseController.EditCourse)
 
 
 
+
+//#region Check user đã tồn tại hay chưa
+// router.get('/is-available', async function(req, res) {
+//     const username = 
+// })
+//#endregion
 
 
 ///--- User
