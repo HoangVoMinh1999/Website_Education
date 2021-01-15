@@ -13,12 +13,11 @@ const connectionString = {
     insecureAuth: true,
     database: process.env.DB,
 };
+
 /* GET home page. */
 //--- Index
 router.get('/', function(req, res, next) {
-    // console.log(req.session.isAuth);
     let isAuth = req.session.isAuth || false;
-    // console.log(req.session.authUser);
     let authUser = req.session.authUser || false;
     res.render('index', { title: 'Trang chủ', IsAuth: isAuth, AuthUser: authUser })
 });
