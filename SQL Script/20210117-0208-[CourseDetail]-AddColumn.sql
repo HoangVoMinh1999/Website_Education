@@ -1,0 +1,3 @@
+ALTER TABLE `tkweb`.`coursedetail` 
+ADD COLUMN `IsFavorite` BIT NULL DEFAULT 0 AFTER `IsJoin`,
+CHANGE COLUMN `IsJoin` `IsJoin` BIT NOT NULL DEFAULT 0 ;
