@@ -1,7 +1,7 @@
 const db = require("../util/util");
 
 const TBL_COURSE = "ConfigCourse";
-const TBL_COURSETYPE = "ConfigCourseType"
+const TBL_COURSETYPE = "ConfigCourseType";
 
 module.exports = {
     //#region ConfigCourseType
@@ -15,10 +15,13 @@ module.exports = {
     //#region ConfigCourse
     all: () => db.load(`select * from ${TBL_COURSE} where IsDeleted = 0`),
 
+    all4UserId: (UserId) => db.load(`select * from ${TBL_COURSE} where IsDeleted = 0 and UserId = ${UserId}`),
 
     getCourseByCourseTypeId: (courseTypeId) =>
         db.load(`select * from ${TBL_COURSE} where IsDeleted = 0 and ConfigCourseTypeId = '${courseTypeId}'`),
 
+    getCourseByCourseTypeId4UserId: (courseTypeId,UserId) =>
+        db.load(`select * from ${TBL_COURSE} where IsDeleted = 0 and ConfigCourseTypeId = '${courseTypeId}' and UserId = ${UserId}`),
     single: async(id) => {
         const rows = await db.load(
             `select * from ${TBL_COURSE} where IsDeleted = 0 and ID = '${id}'`

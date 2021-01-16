@@ -5,26 +5,48 @@ const CourseService = require("../Service/CourseService")
 
 //#region  List Course 
 const ListCourse =async function(req,res,next){
-    let listData = []
-    let courseType = 'Danh sách khóa học'
+    if (req.session.isAdmin){
+        let listData = []
+        let courseType = 'Danh sách khóa học'
+    
+        let typeId = req.query.ConfigCourseTypeId
+        if (typeId === undefined){
+            listData = await  CourseService.all()
+        }
+        else{
+            courseType = await CourseService.getCourseTypeById(typeId)
+            courseType = courseType[0].Name
+            listData = await CourseService.getCourseByCourseTypeId(typeId)
+        }
+        res.render('./course/listCourse',{
+            title:courseType,
+            data : listData,
+        })
+    }
+    else if (req.session.isTeacher){
+        let listData = []
+        let courseType = 'Danh sách khóa học'
+    
+        let typeId = req.query.ConfigCourseTypeId
+        if (typeId === undefined){
+            listData = await  CourseService.all4UserId(req.session.authUser.ID)
+        }
+        else{
+            courseType = await CourseService.getCourseTypeById(typeId)
+            courseType = courseType[0].Name
+            listData = await CourseService.getCourseByCourseTypeId4UserId(typeId,req.session.authUser.ID)
+        }
+        res.render('./course/listCourse',{
+            title:courseType,
+            data : listData,
+        })
+    }
 
-    let typeId = req.query.ConfigCourseTypeId
-    if (typeId === undefined){
-        listData = await  CourseService.all()
-    }
-    else{
-        courseType = await CourseService.getCourseTypeById(typeId)
-        courseType = courseType[0].Name
-        listData = await CourseService.getCourseByCourseTypeId(typeId)
-    }
-    res.render('./course/listCourse',{
-        title:courseType,
-        data : listData,
-    })
 }
 //#endregion
 //#region Add Course
-const AddNewCourse = function(req,res,next){
+const AddNewCourse =async function(req,res,next){
+    console.log(req.session.authUser.ID)
     var newItem = {
         Name: req.body.Name,
         ConfigCourseTypeId: req.body.ConfigCourseType,
@@ -37,8 +59,10 @@ const AddNewCourse = function(req,res,next){
         Status : req.body.Status,
         Log_CreatedDate: require('moment')().format('YYYY-MM-DD HH:mm:ss'),
         Log_UpdatedDate: require('moment')().format('YYYY-MM-DD HH:mm:ss'),
+        UserId : req.session.authUser.ID,
     }
-
+    await CourseService.add(newItem)
+    res.redirect('/course?ConfigCourseTypeId='+req.body.ConfigCourseType)
 }
 //#endregion
 //#region Delete Course
