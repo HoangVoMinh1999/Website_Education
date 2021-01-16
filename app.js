@@ -29,7 +29,16 @@ app.use(session({
         // secure: true
     }
 }))
+// session login
+app.use(function(req, res, next) {
+    if (req.session.isAuth === null || req.session.isAuth === undefined) {
+        req.session.isAuth = false;
+    }
 
+    res.locals.IsAuth = req.session.isAuth;
+    res.locals.AuthUser = req.session.authUser;
+    next();
+});
 
 app.use(express.static('public'))
 
@@ -41,7 +50,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
     next(createError(404));
@@ -58,16 +66,6 @@ app.use(function(err, req, res, next) {
     res.render('error');
 });
 
-// session login
-app.use(function(req, res, next) {
-    if (req.session.isAuth === null) {
-        req.session.isAuth = false;
-    }
 
-    res.locals.isAuth = req.session.isAuth;
-    res.locals.authUser = req.session.authUser;
-
-    next();
-});
 
 module.exports = app;

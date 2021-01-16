@@ -17,9 +17,12 @@ const connectionString = {
 /* GET home page. */
 //--- Index
 router.get('/', function(req, res, next) {
-    let isAuth = req.session.isAuth || false;
-    let authUser = req.session.authUser || false;
-    res.render('index', { title: 'Trang chủ', IsAuth: isAuth, AuthUser: authUser })
+    if (req.session.isAuth === true){
+        res.render('index', { title: 'Trang chủ'})
+    }
+    else{
+        res.redirect('/login')
+    }
 });
 
 

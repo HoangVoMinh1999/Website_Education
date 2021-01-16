@@ -106,33 +106,8 @@ const EditUser = async function(req, res, next) {
 
 //#region Login
 const Login = async function(req, res, next) {
-        // var username = req.body.Username
-        // var password = req.body.Password
-        // var msg = ''
-        // var data = ''
-        // const connection = mysql.createConnection(connectionString)
-        // connection.connect()
-        // connection.query('SELECT * FROM USER WHERE Username = ?', [username], function(err, results, fields) {
-        //     if (err) throw err
-        //     if (results.length === 0) {
-        //         msg = ''
-        //     } else {
-        //         data = results[0]
-        //         console.log(data.Password)
-        //         console.log(password)
-        //         if (bcrypt.compareSync(password, data.Password)) {
-        //             req.session.isAuth = true
-        //             req.session.authUser = data
-        //             res.redirect('/')
-        //         } else {
-        //             res.redirect('/login')
-        //         }
-        //     }
-        // })
-        // connection.end()
         const user = await singleByUsername(req.body.Username)
-        console.log(user)
-        if (user === undefined) {
+        if (user === null) {
             return res.redirect('/login')
         }
         const ret = bcrypt.compareSync(req.body.Password, user.Password)
