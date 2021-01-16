@@ -103,6 +103,7 @@
                 <div class="left-custom-menu-adp-wrap comment-scrollbar">
                     <nav class="sidebar-nav left-sidebar-menu-pro">
                         <ul class="metismenu" id="menu1">
+                            {{#if IsTeacher}}
                             <li class="">
                                 <a class="has-arrow" href="/">
                                     <i class="fa fa-graduation-cap icon-wrap"></i>
@@ -119,6 +120,8 @@
                                     </form>
                                 </ul>
                             </li>
+                            {{/if}}
+                            {{#if IsAdmin}}
                             <li>
                                 <a class="has-arrow" href="#" aria-expanded="false"><i class="fa fa-user icon-wrap"></i>
                                     <span class="mini-click-non">Quản lý tài khoản</span></a>
@@ -133,6 +136,7 @@
                                     </form>
                                 </ul>
                             </li>
+                            {{/if}}
                         </ul>
                     </nav>
                 </div>

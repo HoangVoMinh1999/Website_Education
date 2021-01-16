@@ -6,6 +6,7 @@ var mysql = require('mysql');
 const bcrypt = require('bcryptjs');
 var session = require('express-session');
 const { singleByUsername } = require('../Service/UserService');
+const { use } = require('../routes');
 
 let sMessage = ''
     // --- Config database ---
@@ -116,6 +117,13 @@ const Login = async function(req, res, next) {
         } else {
             req.session.isAuth = true
             req.session.authUser = user
+            if (user.Role === 1){
+                req.session.isAdmin = true;
+                req.session.isTeacher = true;
+            }
+            else if (user.Role === 2){
+                req.session.isTeacher = true
+            }
             res.redirect('/')
         }
     }

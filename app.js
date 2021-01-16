@@ -37,6 +37,8 @@ app.use(function(req, res, next) {
 
     res.locals.IsAuth = req.session.isAuth;
     res.locals.AuthUser = req.session.authUser;
+    res.locals.IsAdmin  = req.session.isAdmin;
+    res.locals.IsTeacher = req.session.isTeacher;
     next();
 });
 
