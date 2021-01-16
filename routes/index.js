@@ -4,6 +4,9 @@ var CourseController = require('../Controller/CourseController')
 var UserController = require('../Controller/UserController')
 var mysql = require('mysql')
 var session = require('express-session')
+var multer = require('multer')
+var fs = require('fs')
+var upload = multer({ dest: '../resources/upload/' })
 
 // Config database
 const connectionString = {
@@ -17,10 +20,9 @@ const connectionString = {
 /* GET home page. */
 //--- Index
 router.get('/', function(req, res, next) {
-    if (req.session.isAuth === true){
-        res.render('index', { title: 'Trang chủ'})
-    }
-    else{
+    if (req.session.isAuth === true) {
+        res.render('index', { title: 'Trang chủ' })
+    } else {
         res.redirect('/login')
     }
 });
@@ -92,7 +94,7 @@ router.get('/add-user', function(req, res, next) {
     connection.end();
 })
 
-router.post('/add-user', UserController.AddNewUser)
+router.post('/add-user', upload.single('UserImage'), UserController.AddNewUser)
     //#endregion
 
 //#region Delete User
@@ -127,7 +129,7 @@ router.get('/edit-user', function(req, res, next) {
     })
     connection.end()
 })
-router.post('/edit-user', UserController.EditUser)
+router.post('/edit-user', upload.single('UserImage'), UserController.EditUser)
 
 //#endregion
 

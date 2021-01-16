@@ -16,7 +16,7 @@
                         </tr>
                         {{#each data}}
                         <tr>
-                            <td><img src="img/new-product/5-small.jpg" alt="" /></td>
+                            <td><img src="{{encodeMyString this.UserImage}}" alt="" /></td>
                             <td>{{this.Username}}</td>
                             <td>{{this.Email}}</td>
                             <td>

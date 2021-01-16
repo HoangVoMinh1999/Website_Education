@@ -61,6 +61,12 @@
                                                     placeholder="Mô tả chung về khóa học">{{data.Intro}}</textarea>
                                             </div>
                                         </div>
+                                        <div class="input-group mg-b-pro-edt">
+                                            <span class="input-group-addon"><i class="fa fa-info-circle"
+                                                    aria-hidden="true"></i></span>
+                                            <textarea class="form-control" name="Description" id="txtDes" cols="30"
+                                                rows="7" placeholder="Mô tả chi tiết về khóa học"></textarea>
+                                        </div>
                                     </div>
                             </div>
                             <div class="row">
@@ -154,4 +160,19 @@
     function Previous() {
         window.history.go(-1);
     }
+</script>
+
+<script src="https://cdn.tiny.cloud/1/5ohrpqibssru1ef3263qgr6pgex0qxq7k540q7sip64s6a9l/tinymce/5/tinymce.min.js"
+    referrerpolicy="origin"></script>
+
+<script>
+    tinymce.init({
+        selector: '#txtDes',
+        height: 600,
+        plugins: 'paste image link autolink lists table media',
+        menubar: false,
+        toolbar: [
+        'undo redo | bold italic underline strikethrough | numlist bullist | alignleft aligncenter alignright | forecolor backcolor | table link image media',
+        ]
+    });
 </script>
