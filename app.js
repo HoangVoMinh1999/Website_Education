@@ -9,6 +9,9 @@ var hbs = require('express-handlebars')
 var Sequelize = require('sequelize')
 var bcryptjs = require('bcryptjs')
 var session = require('express-session')
+var multer = require('multer')
+var upload = multer({ dest: '../resources/upload/' })
+var fs = require('fs')
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -22,14 +25,14 @@ app.set('view engine', 'hbs');
 
 app.set('trust proxy', 1) // trust first proxy
 app.use(session({
-    secret: 'SECRET_KEY',
-    resave: false,
-    saveUninitialized: true,
-    cookie: {
-        // secure: true
-    }
-}))
-// session login
+        secret: 'SECRET_KEY',
+        resave: false,
+        saveUninitialized: true,
+        cookie: {
+            // secure: true
+        }
+    }))
+    // session login
 app.use(function(req, res, next) {
     if (req.session.isAuth === null || req.session.isAuth === undefined) {
         req.session.isAuth = false;
@@ -37,10 +40,18 @@ app.use(function(req, res, next) {
 
     res.locals.IsAuth = req.session.isAuth;
     res.locals.AuthUser = req.session.authUser;
-    res.locals.IsAdmin  = req.session.isAdmin;
+    res.locals.IsAdmin = req.session.isAdmin;
     res.locals.IsTeacher = req.session.isTeacher;
     next();
 });
+
+var temp = hbs.create({});
+temp.handlebars.registerHelper('encodeMyString', function(inputData) {
+    if (inputData) {
+        return "data:img/png;base64, " + Buffer.from(inputData).toString('base64');
+    }
+    return "/img/dummy/ul.png"
+})
 
 app.use(express.static('public'))
 

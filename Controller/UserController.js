@@ -5,6 +5,9 @@ const UserService = require("../Service/UserService")
 var mysql = require('mysql');
 const bcrypt = require('bcryptjs');
 var session = require('express-session');
+var multer = require('multer')
+var fs = require('fs')
+var upload = multer({ dest: '../resources/upload/' })
 const { singleByUsername } = require('../Service/UserService');
 const { use } = require('../routes');
 
@@ -41,23 +44,42 @@ const ListUser = async function(req, res, next) {
 
 //#region Add User
 const AddNewUser = async function(req, res, next) {
+        let password = await req.body.Password
+            // console.log(password)
+        let passwordHash = await bcrypt.hashSync(password, 10)
         var newItem = {
             Username: req.body.Username,
-            Password: bcrypt.hashSync(req.body.Password, 10),
+            Password: passwordHash,
             Email: req.body.Email,
             Role: req.body.Role,
             Status: req.body.Status,
             Log_CreatedDate: require('moment')().format('YYYY-MM-DD HH:mm:ss'),
             Log_UpdatedDate: require('moment')().format('YYYY-MM-DD HH:mm:ss'),
+            UserImage: "",
         }
-
         let user = await UserService.singleByUsername(newItem.Username)
-        console.log(user);
+            // console.log(user);
         if (user !== undefined) {
             sMessage = 'Ten tai khoan da ton tai'
             console.log(sMessage);
             res.redirect('/add-user')
         } else {
+            // const storage = multer.diskStorage({
+            //     destination: function(req, file, cb) {
+            //         cb(null, './resources/upload/')
+            //     },
+            //     filename: function(req, file, cb) {
+            //         cb(null, file.originalname)
+            //     }
+            // })
+            if (req.file) {
+                newItem.UserImage = fs.readFileSync('../resources/upload/' + req.file.filename)
+            } else {
+                newItem.UserImage = ""
+            }
+            // const upload = multer({ storage })
+            await upload.single('UserImage')
+                // console.log(newItem)
             await UserService.add(newItem)
             res.redirect('/add-user')
         }
@@ -83,6 +105,23 @@ const DeleteUser = async function(req, res, next) {
 const EditUser = async function(req, res, next) {
         var typeId = ''
         var ID = req.body.ID
+            // if (req.file) {
+            //     let userImage = fs.readFileSync('../resources/upload/' + req.file.filename)
+            //     var updatedItem = {
+            //         ID: ID,
+            //         Role: req.body.Role,
+            //         Status: req.body.Status,
+            //         Log_UpdatedDate: require('moment')().format('YYYY-MM-DD HH:mm:ss'),
+            //         UserImage: userImage,
+            //     }
+            // } else {
+            //     var updatedItem = {
+            //         ID: ID,
+            //         Role: req.body.Role,
+            //         Status: req.body.Status,
+            //         Log_UpdatedDate: require('moment')().format('YYYY-MM-DD HH:mm:ss'),
+            //     }
+            // }
         var updatedItem = {
             ID: ID,
             Role: req.body.Role,
@@ -90,9 +129,11 @@ const EditUser = async function(req, res, next) {
             Log_UpdatedDate: require('moment')().format('YYYY-MM-DD HH:mm:ss'),
         }
         let user = await UserService.single(ID)
-        console.log(user);
+            // console.log(user);
         if (user !== null) {
             typeId = user.Role
+                // await upload.single('UserImage')
+            console.log(updatedItem)
             await UserService.updateUser(updatedItem.ID, updatedItem.Role, updatedItem.Status, updatedItem.Log_UpdatedDate)
         }
         res.redirect('/user?Role=' + typeId)
@@ -117,11 +158,10 @@ const Login = async function(req, res, next) {
         } else {
             req.session.isAuth = true
             req.session.authUser = user
-            if (user.Role === 1){
+            if (user.Role === 1) {
                 req.session.isAdmin = true;
                 req.session.isTeacher = true;
-            }
-            else if (user.Role === 2){
+            } else if (user.Role === 2) {
                 req.session.isTeacher = true
             }
             res.redirect('/')

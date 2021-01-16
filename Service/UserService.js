@@ -39,7 +39,7 @@ module.exports = {
     delete: (id) =>
         db.patch(`Update ${TBL_USER} set IsDeleted = 1 where Id = '${id}'`),
 
-    updateUser: (entityID, entityRole, entityStatus, entityLog_UpdatedDate) =>
+    updateUser: (entityID, entityRole, entityStatus, entityLog_UpdatedDate, entityUserImage) =>
         db.patch(`UPDATE ${TBL_USER} set Role = '${entityRole}', Status = '${entityStatus}', Log_UpdatedDate = '${entityLog_UpdatedDate}' where Id = '${entityID}'`),
 
 
